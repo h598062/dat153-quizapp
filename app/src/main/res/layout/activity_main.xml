@@ -5,12 +5,15 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/catppuccin_mocha_base"
     tools:context=".MainActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/catppuccin_mocha_lavender"
+        android:layout_marginHorizontal="10dp"
+        android:layout_marginVertical="10dp"
+        android:background="@drawable/rounded_corners"
         android:gravity="center"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -28,7 +31,7 @@
             android:shadowRadius="20"
             android:text="@string/main_title"
             android:textAlignment="center"
-            android:textColor="@color/catppuccin_frappe_maroon"
+            android:textColor="@color/catppuccin_mocha_maroon"
             android:textSize="60sp"
             android:textStyle="bold" />
 
@@ -37,15 +40,37 @@
             android:layout_height="100dp" />
 
         <Button
-            android:id="@+id/btnGalleri"
-            android:layout_width="150dp"
-            android:layout_height="50dp"
-            android:text="@string/btnGalleri" />
-
-        <Button
             android:id="@+id/btnStartQuiz"
             android:layout_width="150dp"
             android:layout_height="50dp"
-            android:text="@string/btn_start_Quiz" />
+            android:backgroundTint="@color/catppuccin_mocha_teal"
+            android:elevation="8dp"
+            android:fontFamily="casual"
+            android:shadowColor="@color/catppuccin_mocha_mantle"
+            android:shadowRadius="3"
+            android:text="@string/btn_start_Quiz"
+            android:textColor="@color/catppuccin_mocha_maroon"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:cornerRadius="15dp"
+            app:strokeColor="@color/catppuccin_mocha_base"
+            app:strokeWidth="2dp" />
+
+        <Button
+            android:id="@+id/btnGalleri"
+            android:layout_width="150dp"
+            android:layout_height="50dp"
+            android:backgroundTint="@color/catppuccin_mocha_yellow"
+            android:elevation="8dp"
+            android:fontFamily="casual"
+            android:shadowColor="@color/catppuccin_mocha_mantle"
+            android:shadowRadius="3"
+            android:text="@string/btnGalleri"
+            android:textColor="@color/catppuccin_mocha_maroon"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:cornerRadius="15dp"
+            app:strokeColor="@color/catppuccin_mocha_base"
+            app:strokeWidth="2dp" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

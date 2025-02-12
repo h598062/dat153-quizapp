@@ -1,4 +1,4 @@
-package no.dat153.quizzler;
+package no.dat153.quizzler.view;
 
 import android.content.Intent;
 import android.os.Bundle;

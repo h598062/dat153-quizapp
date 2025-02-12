@@ -3,4 +3,6 @@
     <string name="main_title" translatable="false">Quizzler</string>
     <string name="btnGalleri">Galleri</string>
     <string name="btn_start_Quiz">Start Quizzler</string>
+    <string name="gallery_title">Gallery</string>
+    <string name="quiz_title">Quiz</string>
 </resources>

@@ -5,15 +5,17 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".QuizActivity">
+    android:background="@color/catppuccin_mocha_base"
+    tools:context=".view.QuizActivity">
 
     <LinearLayout
-        android:layout_width="409dp"
-        android:layout_height="729dp"
-        android:layout_marginStart="1dp"
-        android:layout_marginTop="1dp"
-        android:layout_marginEnd="1dp"
-        android:layout_marginBottom="1dp"
+        android:id="@+id/layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginHorizontal="10dp"
+        android:layout_marginVertical="10dp"
+        android:background="@drawable/rounded_corners"
+        android:gravity="center_horizontal"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -21,11 +23,17 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
+            android:id="@+id/tittel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="START QUIZ"
-            />
-
-
+            android:paddingHorizontal="20dp"
+            android:paddingVertical="5dp"
+            android:shadowColor="@color/catppuccin_frappe_crust"
+            android:shadowRadius="20"
+            android:text="@string/quiz_title"
+            android:textAlignment="center"
+            android:textColor="@color/catppuccin_mocha_maroon"
+            android:textSize="60sp"
+            android:textStyle="bold" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

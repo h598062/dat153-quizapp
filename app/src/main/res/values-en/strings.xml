@@ -4,4 +4,5 @@
     <string name="btn_start_Quiz">Start</string>
     <string name="gallery_title">Gallery</string>
     <string name="quiz_title">Quiz</string>
+    <string name="missing">missing text</string>
 </resources>

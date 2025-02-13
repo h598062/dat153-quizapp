@@ -1,6 +1,7 @@
 package no.dat153.quizzler.view;
 
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -8,25 +9,36 @@ import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.activity.OnBackPressedCallback;
+import androidx.annotation.ColorRes;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.recyclerview.widget.GridLayoutManager;
 
 import no.dat153.quizzler.R;
+import no.dat153.quizzler.adapter.GalleryItemAdapter;
 import no.dat153.quizzler.databinding.ActivityGalleryBinding;
-import no.dat153.quizzler.utils.DrawableUtils;
 
 public class GalleryActivity extends AppCompatActivity {
 
+    private static final String TAG = "GalleryActivity";
+    private static @ColorRes Integer bgColor;
     private ActivityGalleryBinding binding;
-
+    private GalleryItemAdapter adapter;
     private Animation fromBottom;
     private Animation fromTop;
     private Animation rotateOpen;
     private Animation rotateClose;
+    private Boolean floatingMenuOpen = false;
 
-    private Boolean clicked = false;
+    public static @ColorRes Integer getBgColor() {
+        return bgColor;
+    }
+
+    public static void setBgColor(@ColorRes Integer bgColor) {
+        GalleryActivity.bgColor = bgColor;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,15 +58,15 @@ public class GalleryActivity extends AppCompatActivity {
         rotateOpen = AnimationUtils.loadAnimation(this, R.anim.rotate_open_anim);
         rotateClose = AnimationUtils.loadAnimation(this, R.anim.rotate_close_anim);
 
-        DrawableUtils.setBackgroundColor(this, binding.layout, R.drawable.rounded_corners, com.shifthackz.catppuccin.palette.legacy.R.color.catppuccin_mocha_yellow);
+        binding.layout.setBackgroundTintList(getColorStateList(bgColor));
 
         binding.addButton.setOnClickListener(v -> {
-            if (clicked) {
+            if (floatingMenuOpen) {
                 closeMenu();
-                clicked = false;
+                floatingMenuOpen = false;
             } else {
                 openMenu();
-                clicked = true;
+                floatingMenuOpen = true;
             }
         });
 
@@ -73,9 +85,9 @@ public class GalleryActivity extends AppCompatActivity {
             @Override
             public void handleOnBackPressed() {
                 // Handle the back button event
-                if (clicked) {
+                if (floatingMenuOpen) {
                     closeMenu();
-                    clicked = false;
+                    floatingMenuOpen = false;
                 } else {
                     finish();
                     overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
@@ -83,6 +95,20 @@ public class GalleryActivity extends AppCompatActivity {
             }
         });
 
+        int spanCount = calculateSpanCount();
+        GridLayoutManager layoutManager = new GridLayoutManager(this, spanCount);
+        binding.recyclerView.setLayoutManager(layoutManager);
+
+        adapter = new GalleryItemAdapter(this, R.drawable.cola, R.drawable.gud, R.drawable.gisle, R.drawable.guy, R.drawable.wah);
+        binding.recyclerView.setAdapter(adapter);
+
+    }
+
+    private int calculateSpanCount() {
+        DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
+        float dpWidth = displayMetrics.widthPixels / displayMetrics.density;
+        int itemWidth = 120; // Adjust based on item size in dp
+        return Math.max(2, (int) (dpWidth / itemWidth)); // At least 2 columns
     }
 
     private void openMenu() {

@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="btnGalleri">Galleri</string>
-    <string name="btn_start_Quiz">Start</string>
+    <string name="btn_start_Quiz">Begynn</string>
     <string name="gallery_title">Galleri</string>
     <string name="quiz_title">Quiz</string>
+    <string name="missing">mangler tekst</string>
 </resources>

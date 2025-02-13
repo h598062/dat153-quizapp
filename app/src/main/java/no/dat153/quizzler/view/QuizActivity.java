@@ -5,6 +5,7 @@ import android.view.View;
 
 import androidx.activity.EdgeToEdge;
 import androidx.activity.OnBackPressedCallback;
+import androidx.annotation.ColorRes;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -12,11 +13,20 @@ import androidx.core.view.WindowInsetsCompat;
 
 import no.dat153.quizzler.R;
 import no.dat153.quizzler.databinding.ActivityQuizBinding;
-import no.dat153.quizzler.utils.DrawableUtils;
 
 public class QuizActivity extends AppCompatActivity {
 
+    private static final String TAG = "QuizActivity";
+    private static @ColorRes Integer bgColor;
     private ActivityQuizBinding binding;
+
+    public static @ColorRes Integer getBgColor() {
+        return bgColor;
+    }
+
+    public static void setBgColor(@ColorRes Integer bgColor) {
+        QuizActivity.bgColor = bgColor;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +41,7 @@ public class QuizActivity extends AppCompatActivity {
             return insets;
         });
 
-        DrawableUtils.setBackgroundColor(this, binding.layout, R.drawable.rounded_corners, com.shifthackz.catppuccin.palette.legacy.R.color.catppuccin_mocha_teal);
+        binding.layout.setBackgroundTintList(getColorStateList(bgColor));
 
 
         getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {

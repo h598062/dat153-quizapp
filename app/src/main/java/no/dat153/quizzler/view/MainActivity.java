@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.ColorRes;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -14,8 +15,17 @@ import no.dat153.quizzler.R;
 import no.dat153.quizzler.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
-
+    private static final String TAG = "MainActivity";
+    private static @ColorRes Integer bgColor;
     private ActivityMainBinding binding;
+
+    public static @ColorRes Integer getBgColor() {
+        return bgColor;
+    }
+
+    public static void setBgColor(@ColorRes Integer bgColor) {
+        MainActivity.bgColor = bgColor;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +39,10 @@ public class MainActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+        binding.layout.setBackgroundTintList(getColorStateList(bgColor));
+        binding.btnGalleri.setBackgroundTintList(getColorStateList(GalleryActivity.getBgColor()));
+        binding.btnStartQuiz.setBackgroundTintList(getColorStateList(QuizActivity.getBgColor()));
 
         binding.btnGalleri.setOnClickListener(v -> {
             Intent intent = new Intent(this, GalleryActivity.class);

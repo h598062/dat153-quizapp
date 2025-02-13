@@ -6,4 +6,5 @@
     <string name="gallery_title">Gallery</string>
     <string name="quiz_title">Quiz</string>
     <string name="TODO" translatable="false">TODO</string>
+    <string name="missing">missing text</string>
 </resources>

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Quizzler</string>
+    <string name="btnGalleri">Gallery</string>
+    <string name="btn_start_Quiz">Start</string>
     <string name="gallery_title">Gallery</string>
     <string name="quiz_title">Quiz</string>
 </resources>

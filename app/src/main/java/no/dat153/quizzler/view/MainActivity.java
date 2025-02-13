@@ -10,6 +10,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import no.dat153.quizzler.R;
 import no.dat153.quizzler.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
@@ -30,13 +31,15 @@ public class MainActivity extends AppCompatActivity {
         });
 
         binding.btnGalleri.setOnClickListener(v -> {
-            Intent intent = new Intent (this, GalleryActivity.class);
+            Intent intent = new Intent(this, GalleryActivity.class);
             startActivity(intent);
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
         });
 
         binding.btnStartQuiz.setOnClickListener(v -> {
             Intent intent = new Intent(this, QuizActivity.class);
             startActivity(intent);
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
         });
     }
 }

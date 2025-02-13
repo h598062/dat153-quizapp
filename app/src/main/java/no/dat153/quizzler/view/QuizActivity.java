@@ -1,12 +1,11 @@
 package no.dat153.quizzler.view;
 
-import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.view.View;
 
 import androidx.activity.EdgeToEdge;
+import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.res.ResourcesCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -18,6 +17,7 @@ import no.dat153.quizzler.utils.DrawableUtils;
 public class QuizActivity extends AppCompatActivity {
 
     private ActivityQuizBinding binding;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,5 +32,18 @@ public class QuizActivity extends AppCompatActivity {
         });
 
         DrawableUtils.setBackgroundColor(this, binding.layout, R.drawable.rounded_corners, com.shifthackz.catppuccin.palette.legacy.R.color.catppuccin_mocha_teal);
+
+
+        getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                // Handle the back button event
+                finish();
+                overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+            }
+        });
+
+
     }
+
 }

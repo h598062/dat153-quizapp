@@ -11,7 +11,6 @@ catppuccin = "0.1.2"
 roomRuntime = "2.4.2"
 
 [libraries]
-compose = { module = "com.github.ShiftHackZ.Catppuccin-Android-Library:compose", version.ref = "catppuccin" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }

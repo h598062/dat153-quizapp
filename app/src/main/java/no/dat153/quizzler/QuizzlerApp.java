@@ -17,7 +17,7 @@ import no.dat153.quizzler.view.MainActivity;
 import no.dat153.quizzler.view.QuizActivity;
 
 public class QuizzlerApp extends Application {
-    private static final String TAG = "QuizzlerApp";
+    private final String TAG = this.getClass().getSimpleName();
 
 
     @Override

@@ -45,10 +45,10 @@ import no.dat153.quizzler.utils.QuestionHelper;
 
 public class GalleryActivity extends AppCompatActivity {
 
-    private static final String TAG = "GalleryActivity";
     private static @ColorRes Integer bgColor;
     private static Boolean cameraEnabled = true;
     private static Boolean galleryEnabled = true;
+    private final String TAG = this.getClass().getSimpleName();
     private ActivityGalleryBinding binding;
     private GalleryItemAdapter adapter;
     private Animation fromBottom;

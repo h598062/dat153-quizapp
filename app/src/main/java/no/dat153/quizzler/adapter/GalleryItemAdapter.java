@@ -18,7 +18,7 @@ import no.dat153.quizzler.entity.QuestionItem;
 
 public class GalleryItemAdapter extends RecyclerView.Adapter<GalleryItemAdapter.ViewHolder> {
 
-    private static final String TAG = "GalleryItemAdapter";
+    private final String TAG = this.getClass().getSimpleName();
     private Context context;
     private List<QuestionItem> questions;
 

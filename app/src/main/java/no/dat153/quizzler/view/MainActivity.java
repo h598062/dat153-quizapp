@@ -21,13 +21,12 @@ import no.dat153.quizzler.R;
 import no.dat153.quizzler.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
-    private static final String TAG = "MainActivity";
-    private static @ColorRes Integer bgColor;
-    private ActivityMainBinding binding;
-
     private static final int REQUEST_CAMERA = 1;
     private static final int REQUEST_MEDIA_IMAGES = 2;
     private static final int REQUEST_EXTERNAL_STORAGE = 3;
+    private static @ColorRes Integer bgColor;
+    private final String TAG = this.getClass().getSimpleName();
+    private ActivityMainBinding binding;
 
     public static @ColorRes Integer getBgColor() {
         return bgColor;

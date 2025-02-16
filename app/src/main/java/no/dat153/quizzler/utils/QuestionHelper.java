@@ -12,9 +12,8 @@ import no.dat153.quizzler.entity.QuestionItem;
  * Singleton class to store questions
  */
 public class QuestionHelper {
-    private final List<QuestionItem> questions;
-
     private static QuestionHelper instance;
+    private final List<QuestionItem> questions;
 
     private QuestionHelper() {
         this.questions = new ArrayList<>();

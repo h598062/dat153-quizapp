@@ -16,8 +16,8 @@ import no.dat153.quizzler.databinding.ActivityQuizBinding;
 
 public class QuizActivity extends AppCompatActivity {
 
-    private static final String TAG = "QuizActivity";
     private static @ColorRes Integer bgColor;
+    private final String TAG = this.getClass().getSimpleName();
     private ActivityQuizBinding binding;
 
     public static @ColorRes Integer getBgColor() {

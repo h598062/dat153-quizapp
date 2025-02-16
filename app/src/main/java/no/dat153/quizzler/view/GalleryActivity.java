@@ -1,8 +1,10 @@
 package no.dat153.quizzler.view;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -24,6 +26,7 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.ColorRes;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.LinearLayoutCompat;
+import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -46,8 +49,6 @@ import no.dat153.quizzler.utils.QuestionHelper;
 public class GalleryActivity extends AppCompatActivity {
 
     private static @ColorRes Integer bgColor;
-    private static Boolean cameraEnabled = true;
-    private static Boolean galleryEnabled = true;
     private final String TAG = this.getClass().getSimpleName();
     private ActivityGalleryBinding binding;
     private GalleryItemAdapter adapter;
@@ -80,23 +81,6 @@ public class GalleryActivity extends AppCompatActivity {
         GalleryActivity.bgColor = bgColor;
     }
 
-    /**
-     * Setter om vi har fått tilgang til kamera
-     *
-     * @param b True om vi har tilgang til kamera
-     */
-    public static void setCameraEnabled(Boolean b) {
-        cameraEnabled = b;
-    }
-
-    /**
-     * Setter om vi har fått tilgang til phone gallery
-     *
-     * @param b True om vi har tilgang til gallery
-     */
-    public static void setGalleryEnabled(Boolean b) {
-        galleryEnabled = b;
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,10 +95,7 @@ public class GalleryActivity extends AppCompatActivity {
             return insets;
         });
 
-        fromBottom = AnimationUtils.loadAnimation(this, R.anim.from_bottom_anim);
-        fromTop = AnimationUtils.loadAnimation(this, R.anim.to_bottom_anim);
-        rotateOpen = AnimationUtils.loadAnimation(this, R.anim.rotate_open_anim);
-        rotateClose = AnimationUtils.loadAnimation(this, R.anim.rotate_close_anim);
+        loadAnimations();
 
         binding.layout.setBackgroundTintList(getColorStateList(bgColor));
 
@@ -127,30 +108,43 @@ public class GalleryActivity extends AppCompatActivity {
         });
 
         binding.addFromCameraButton.setOnClickListener(v -> {
-            if (!cameraEnabled) {
-                Toast.makeText(this, "You have not given the app permission to use camera", Toast.LENGTH_SHORT).show();
-                Log.d(TAG, "AddFromCameraButton: Camera permission not granted, cannot open camera");
-                return;
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
+                openCamera();
+            } else {
+                Log.d(TAG, "AddFromCameraButton: Camera permission not granted, asking for permission");
+                requestCameraPermissions.launch(Manifest.permission.CAMERA);
             }
-            // Add from camera
-            // Toast.makeText(this, "You clicked the Camera button!", Toast.LENGTH_SHORT).show();
-            openCamera();
+
             closeMenu();
         });
 
         binding.addFromGalleryButton.setOnClickListener(v -> {
-            if (!galleryEnabled) {
-                Toast.makeText(this, "You have not given the app permission to use gallery", Toast.LENGTH_SHORT).show();
-                Log.d(TAG, "AddFromGalleryButton: Gallery permission not granted, cannot open gallery");
-                return;
-            }
-            // Add from gallery
-            // Toast.makeText(this, "You clicked the Gallery button!", Toast.LENGTH_SHORT).show();
             openGallery();
             closeMenu();
         });
 
 
+
+        int spanCount = calculateSpanCount();
+        GridLayoutManager layoutManager = new GridLayoutManager(this, spanCount);
+        binding.recyclerView.setLayoutManager(layoutManager);
+
+        adapter = new GalleryItemAdapter(this, QuestionHelper.getInstance().getQuestions());
+        binding.recyclerView.setAdapter(adapter);
+
+        setupBackButtonHandler();
+        setupCamera();
+        setupGalleryPicker();
+    }
+
+    private void loadAnimations() {
+        fromBottom = AnimationUtils.loadAnimation(this, R.anim.from_bottom_anim);
+        fromTop = AnimationUtils.loadAnimation(this, R.anim.to_bottom_anim);
+        rotateOpen = AnimationUtils.loadAnimation(this, R.anim.rotate_open_anim);
+        rotateClose = AnimationUtils.loadAnimation(this, R.anim.rotate_close_anim);
+    }
+
+    private void setupBackButtonHandler() {
         getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {
@@ -163,14 +157,9 @@ public class GalleryActivity extends AppCompatActivity {
                 }
             }
         });
+    }
 
-        int spanCount = calculateSpanCount();
-        GridLayoutManager layoutManager = new GridLayoutManager(this, spanCount);
-        binding.recyclerView.setLayoutManager(layoutManager);
-
-        adapter = new GalleryItemAdapter(this, QuestionHelper.getInstance().getQuestions());
-        binding.recyclerView.setAdapter(adapter);
-
+    private void setupCamera() {
         // Launcher for å åpne Camera app for å ta et bilde. Det er her callback med resultatet fra bildet er
         cameraLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
             if (result.getResultCode() == Activity.RESULT_OK) {
@@ -181,7 +170,9 @@ public class GalleryActivity extends AppCompatActivity {
                 askForQuestionText(photoUri);
             }
         });
+    }
 
+    private void setupGalleryPicker() {
         // Lanucher for å åpne phone gallery image picker. Det er her callback med resultatet fra bildet er
         galleryLauncher = registerForActivityResult(new ActivityResultContracts.PickVisualMedia(), uri -> {
             if (uri != null) {
@@ -193,7 +184,6 @@ public class GalleryActivity extends AppCompatActivity {
                 askForQuestionText(uri);
             }
         });
-
     }
 
     private void askForQuestionText(Uri imageUri) {
@@ -306,4 +296,12 @@ public class GalleryActivity extends AppCompatActivity {
 
         binding.addButton.startAnimation(rotateClose);
     }
+
+    private final ActivityResultLauncher<String> requestCameraPermissions = registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
+        if (isGranted) {
+            openCamera();
+        } else {
+            Toast.makeText(this, "Camera permission denied", Toast.LENGTH_SHORT).show();
+        }
+    });
 }

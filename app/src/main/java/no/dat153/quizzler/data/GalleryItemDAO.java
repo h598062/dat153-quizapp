@@ -5,6 +5,7 @@ import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
+import androidx.room.Query;
 import androidx.room.Update;
 
 import java.util.List;
@@ -64,6 +65,9 @@ public interface GalleryItemDAO {
     @Delete
     void delete(GalleryItem item);
 
-
-
+    /**
+     * Deletes all GalleryItems from the database.
+     */
+    @Query("DELETE FROM GalleryItem")
+    void deleteAll();
 }

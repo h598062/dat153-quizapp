@@ -15,7 +15,7 @@ public abstract class GalleryDatabase extends RoomDatabase {
 
     private static volatile GalleryDatabase INSTANCE;
 
-    public static GalleryDatabase getDatabase(Context context) {
+    public static GalleryDatabase getInstance(Context context) {
         if (INSTANCE == null) {
             synchronized (GalleryDatabase.class) {
                 if (INSTANCE == null) {

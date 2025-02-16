@@ -42,10 +42,10 @@ dependencies {
     implementation(libs.activity)
     implementation(libs.constraintlayout)
 
-    implementation (libs.palette.legacy)
-    implementation (libs.palette)
-    implementation (libs.compose)
-    implementation (libs.splashscreen)
+    implementation(libs.catppuccin.palette.legacy)
+    implementation(libs.catppuccin.palette)
+    implementation(libs.catppuccin.compose)
+    implementation(libs.catppuccin.splashscreen)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)

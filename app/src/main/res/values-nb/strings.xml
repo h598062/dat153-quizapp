@@ -5,4 +5,7 @@
     <string name="gallery_title">Galleri</string>
     <string name="quiz_title">Quiz</string>
     <string name="missing">mangler tekst</string>
+    <string name="new_question_dialog_title">Tekst til det nye spørsmålet</string>
+    <string name="placeholder">plassholder</string>
+    <string name="submit">Ok</string>
 </resources>

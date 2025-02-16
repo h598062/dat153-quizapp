@@ -10,7 +10,6 @@ constraintlayout = "2.2.0"
 catppuccin = "0.1.2"
 
 [libraries]
-compose = { module = "com.github.ShiftHackZ.Catppuccin-Android-Library:compose", version.ref = "catppuccin" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
@@ -18,9 +17,10 @@ appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "a
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 activity = { group = "androidx.activity", name = "activity", version.ref = "activity" }
 constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
-palette = { module = "com.github.ShiftHackZ.Catppuccin-Android-Library:palette", version.ref = "catppuccin" }
-palette-legacy = { module = "com.github.ShiftHackZ.Catppuccin-Android-Library:palette-legacy", version.ref = "catppuccin" }
-splashscreen = { module = "com.github.ShiftHackZ.Catppuccin-Android-Library:splashscreen", version.ref = "catppuccin" }
+catppuccin_compose = { module = "com.github.ShiftHackZ.Catppuccin-Android-Library:compose", version.ref = "catppuccin" }
+catppuccin_palette = { module = "com.github.ShiftHackZ.Catppuccin-Android-Library:palette", version.ref = "catppuccin" }
+catppuccin_palette-legacy = { module = "com.github.ShiftHackZ.Catppuccin-Android-Library:palette-legacy", version.ref = "catppuccin" }
+catppuccin_splashscreen = { module = "com.github.ShiftHackZ.Catppuccin-Android-Library:splashscreen", version.ref = "catppuccin" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

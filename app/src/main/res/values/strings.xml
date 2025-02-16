@@ -7,4 +7,8 @@
     <string name="quiz_title">Quiz</string>
     <string name="TODO" translatable="false">TODO</string>
     <string name="missing">missing text</string>
+    <string name="new_question_dialog_title">Text for the new question</string>
+    <string name="placeholder">placeholder</string>
+    <string name="submit">Submit</string>
+    <string name="new_question_dialog_hint">Write the text for this question</string>
 </resources>

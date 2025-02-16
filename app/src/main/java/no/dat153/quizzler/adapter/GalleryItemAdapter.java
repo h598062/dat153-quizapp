@@ -7,22 +7,24 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.List;
+
 import no.dat153.quizzler.R;
+import no.dat153.quizzler.entity.QuestionItem;
 
 public class GalleryItemAdapter extends RecyclerView.Adapter<GalleryItemAdapter.ViewHolder> {
 
     private static final String TAG = "GalleryItemAdapter";
-    private @DrawableRes Integer[] imageList;
     private Context context;
+    private List<QuestionItem> questions;
 
-    public GalleryItemAdapter(Context context, @DrawableRes Integer... imageList) {
+    public GalleryItemAdapter(Context context, List<QuestionItem> questions) {
         this.context = context;
-        this.imageList = imageList;
+        this.questions = questions;
     }
 
     @NonNull
@@ -34,12 +36,13 @@ public class GalleryItemAdapter extends RecyclerView.Adapter<GalleryItemAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.imageView.setImageResource(imageList[position]); // Example with drawable
+        holder.imageView.setImageURI(questions.get(position).getImageUri());
+        holder.textView.setText(questions.get(position).getText());
     }
 
     @Override
     public int getItemCount() {
-        return imageList.length;
+        return questions.size();
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {

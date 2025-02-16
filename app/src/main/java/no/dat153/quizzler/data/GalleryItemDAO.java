@@ -10,6 +10,8 @@ import androidx.room.Update;
 
 import java.util.List;
 
+import no.dat153.quizzler.entity.QuestionItem;
+
 /**
  * Data Access Object for GalleryItem.
  * Defines the methods that can be used to interact with the database.
@@ -23,7 +25,7 @@ public interface GalleryItemDAO {
      * @param item The Gallery item to insert.
      */
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insert(GalleryItem item);
+    void insert(QuestionItem item);
 
     /**
      * Inserts multiple GalleryItems into the database.
@@ -32,7 +34,7 @@ public interface GalleryItemDAO {
      * @param items The Gallery items to insert.
      */
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertAll(GalleryItem... items);
+    void insertAll(QuestionItem... items);
 
     /**
      * Retrieves a GalleryItem from the database.
@@ -40,14 +42,14 @@ public interface GalleryItemDAO {
      * @param id The id of the Gallery item to retrieve.
      * @return The Gallery item with the given id.
      */
-    LiveData<GalleryItem> getGalleryItem(int id);
+    LiveData<QuestionItem> getGalleryItem(int id);
 
     /**
      * Retrieves all GalleryItems from the database.
      *
      * @return A list of all Gallery items in the database.
      */
-    LiveData<List<GalleryItem>> getAllGalleryItems();
+    LiveData<List<QuestionItem>> getAllGalleryItems();
 
     /**
      * Updates an existing GalleryItem in the database.
@@ -55,7 +57,7 @@ public interface GalleryItemDAO {
      * @param item The Gallery item to update.
      */
     @Update
-    void update(GalleryItem item);
+    void update(QuestionItem item);
 
     /**
      * Deletes a GalleryItem from the database.
@@ -63,11 +65,11 @@ public interface GalleryItemDAO {
      * @param item The Gallery item to delete.
      */
     @Delete
-    void delete(GalleryItem item);
+    void delete(QuestionItem item);
 
     /**
      * Deletes all GalleryItems from the database.
      */
-    @Query("DELETE FROM GalleryItem")
+    @Query("DELETE FROM QuestionItem")
     void deleteAll();
 }

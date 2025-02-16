@@ -37,7 +37,7 @@ public class GalleryItemAdapter extends RecyclerView.Adapter<GalleryItemAdapter.
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.imageView.setImageURI(questions.get(position).getImageUri());
-        holder.textView.setText(questions.get(position).getText());
+        holder.textView.setText(questions.get(position).getImageText());
     }
 
     @Override

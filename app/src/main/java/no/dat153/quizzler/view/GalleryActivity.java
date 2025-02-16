@@ -62,6 +62,13 @@ public class GalleryActivity extends AppCompatActivity {
     private ActivityResultLauncher<PickVisualMediaRequest> galleryLauncher;
 
     private Uri photoUri;
+    private final ActivityResultLauncher<String> requestCameraPermissions = registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
+        if (isGranted) {
+            openCamera();
+        } else {
+            Toast.makeText(this, "Camera permission denied", Toast.LENGTH_SHORT).show();
+        }
+    });
 
     /**
      * Henter bakgrunnsfargen for denne aktiviteten
@@ -80,7 +87,6 @@ public class GalleryActivity extends AppCompatActivity {
     public static void setBgColor(@ColorRes Integer bgColor) {
         GalleryActivity.bgColor = bgColor;
     }
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -122,7 +128,6 @@ public class GalleryActivity extends AppCompatActivity {
             openGallery();
             closeMenu();
         });
-
 
 
         int spanCount = calculateSpanCount();
@@ -221,7 +226,6 @@ public class GalleryActivity extends AppCompatActivity {
         galleryLauncher.launch(new PickVisualMediaRequest.Builder().setMediaType(ActivityResultContracts.PickVisualMedia.ImageOnly.INSTANCE).build()); // Opens gallery to pick an image
     }
 
-
     /**
      * Moderne måten å åpne en Camera app for å ta et bilde
      */
@@ -296,12 +300,4 @@ public class GalleryActivity extends AppCompatActivity {
 
         binding.addButton.startAnimation(rotateClose);
     }
-
-    private final ActivityResultLauncher<String> requestCameraPermissions = registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
-        if (isGranted) {
-            openCamera();
-        } else {
-            Toast.makeText(this, "Camera permission denied", Toast.LENGTH_SHORT).show();
-        }
-    });
 }

@@ -5,13 +5,14 @@ import android.app.Application;
 import androidx.lifecycle.LiveData;
 
 import java.util.List;
-import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import no.dat153.quizzler.entity.QuestionItem;
+
 public class GalleryRepo {
     private GalleryItemDAO galleryItemDao;
-    private LiveData<List<GalleryItem>> allGalleryItems;
+    private LiveData<List<QuestionItem>> allGalleryItems;
     private ExecutorService executorService;
 
     public GalleryRepo(Application application) {
@@ -21,19 +22,19 @@ public class GalleryRepo {
         executorService = Executors.newSingleThreadExecutor(); // Runs async operations
     }
 
-    public LiveData<List<GalleryItem>> getAllGalleryItems() {
+    public LiveData<List<QuestionItem>> getAllGalleryItems() {
         return allGalleryItems;
     }
 
-    public void insert(GalleryItem item) {
+    public void insert(QuestionItem item) {
         executorService.execute(() -> galleryItemDao.insert(item));
     }
 
-    public void update(GalleryItem item) {
+    public void update(QuestionItem item) {
         executorService.execute(() -> galleryItemDao.update(item));
     }
 
-    public void delete(GalleryItem item) {
+    public void delete(QuestionItem item) {
         executorService.execute(() -> galleryItemDao.delete(item));
     }
 

@@ -3,49 +3,69 @@ package no.dat153.quizzler.entity;
 import android.net.Uri;
 
 import androidx.annotation.NonNull;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
 
 import java.util.Objects;
 
+/**
+ * Represents an item in the gallery.
+ * Each item has an id, a name and an image uri.
+ */
+@Entity
 public class QuestionItem {
-    private String text;
-    private Uri imageUri;
 
-    public QuestionItem(String text, Uri imageUri) {
-        this.text = text;
-        this.imageUri = imageUri;
+    @PrimaryKey(autoGenerate = true)
+    private int id;
+    private String imageText;
+    private String imageUriString;
+
+    /**
+     * Creates a new GalleryItem.
+     *
+     * @param imageText      The name of the item.
+     * @param imageUriString The uri of the image.
+     */
+    public QuestionItem(String imageText, String imageUriString) {
+        this.imageText = imageText;
+        this.imageUriString = imageUriString;
     }
 
+    public QuestionItem(String imageText, Uri imageUriString) {
+        this.imageText = imageText;
+        this.imageUriString = imageUriString.toString();
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public String getImageText() {
+        return imageText;
+    }
+
+    public String getImageUriString() {
+        return imageUriString;
+    }
+
+    public void setImageText(String imageText) {
+        this.imageText = imageText;
+    }
+
+    public void setImageUriString(String imageUriString) {
+        this.imageUriString = imageUriString;
+    }
 
     public Uri getImageUri() {
-        return imageUri;
-    }
-
-    public void setImageUri(Uri imageUri) {
-        this.imageUri = imageUri;
-    }
-
-    public String getText() {
-        return text;
-    }
-
-    public void setText(String text) {
-        this.text = text;
-    }
-
-    public String getImgUriString() {
-        return imageUri.toString();
-    }
-
-    public void setImgUriFromString(String imgUriString) {
-        this.imageUri = Uri.parse(imgUriString);
+        return Uri.parse(imageUriString);
     }
 
     @NonNull
     @Override
     public String toString() {
-        return "QuestionItem{" +
-                " imageUri=" + imageUri +
-                ", text='" + text + '\'' +
+        return "GalleryItem{" +
+                " imageUriString=" + imageUriString +
+                ", imageText='" + imageText + '\'' +
                 " }";
     }
 
@@ -54,11 +74,11 @@ public class QuestionItem {
         if (this == o) return true;
         if (!(o instanceof QuestionItem)) return false;
         QuestionItem that = (QuestionItem) o;
-        return Objects.equals(text, that.text) && Objects.equals(imageUri, that.imageUri);
+        return Objects.equals(imageText, that.imageText) && Objects.equals(imageUriString, that.imageUriString);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(text, imageUri);
+        return Objects.hash(imageText, imageUriString);
     }
 }

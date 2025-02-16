@@ -7,11 +7,11 @@ import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
-@Database(entities = {GalleryItem.class}, version = 1)
+import no.dat153.quizzler.entity.QuestionItem;
+
+@Database(entities = {QuestionItem.class}, version = 1)
 public abstract class GalleryDatabase extends RoomDatabase {
 
-
-    public abstract GalleryItemDAO galleryItemDAO();
 
     private static volatile GalleryDatabase INSTANCE;
 
@@ -20,11 +20,13 @@ public abstract class GalleryDatabase extends RoomDatabase {
             synchronized (GalleryDatabase.class) {
                 if (INSTANCE == null) {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
-                            GalleryDatabase.class, "gallery_database")
+                                    GalleryDatabase.class, "gallery_database")
                             .build();
                 }
             }
         }
         return INSTANCE;
     }
+
+    public abstract GalleryItemDAO galleryItemDAO();
 }

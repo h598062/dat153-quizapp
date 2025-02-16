@@ -86,14 +86,14 @@ public class QuestionHelper {
      * Sort the questions in ascending order
      */
     public void sortQuestionsDescending() {
-        questions.sort(Comparator.comparing(QuestionItem::getText));
+        questions.sort(Comparator.comparing(QuestionItem::getImageText));
     }
 
     /**
      * Sort the questions in descending order
      */
     public void sortQuestionsAscending() {
-        questions.sort(Comparator.comparing(QuestionItem::getText).reversed());
+        questions.sort(Comparator.comparing(QuestionItem::getImageText).reversed());
     }
 
 

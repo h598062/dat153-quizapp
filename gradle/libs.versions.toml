@@ -27,4 +27,4 @@ room-runtime = { module = "androidx.room:room-runtime", version.ref = "roomRunti
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
-
+room = { id = "androidx.room", version.ref = "roomRuntime" }

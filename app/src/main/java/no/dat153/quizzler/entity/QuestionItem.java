@@ -40,16 +40,20 @@ public class QuestionItem {
         return id;
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public String getImageText() {
         return imageText;
     }
 
-    public String getImageUriString() {
-        return imageUriString;
-    }
-
     public void setImageText(String imageText) {
         this.imageText = imageText;
+    }
+
+    public String getImageUriString() {
+        return imageUriString;
     }
 
     public void setImageUriString(String imageUriString) {

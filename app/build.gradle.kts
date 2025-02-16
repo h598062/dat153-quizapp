@@ -1,10 +1,15 @@
 plugins {
     alias(libs.plugins.android.application)
+    alias(libs.plugins.room)
 }
 
 android {
     namespace = "no.dat153.quizzler"
     compileSdk = 35
+
+    room {
+        schemaDirectory("$projectDir/schemas")
+    }
 
     defaultConfig {
         applicationId = "no.dat153.quizzler"

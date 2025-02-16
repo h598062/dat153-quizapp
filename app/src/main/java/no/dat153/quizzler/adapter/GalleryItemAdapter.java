@@ -22,9 +22,14 @@ public class GalleryItemAdapter extends RecyclerView.Adapter<GalleryItemAdapter.
     private Context context;
     private List<QuestionItem> questions;
 
-    public GalleryItemAdapter(Context context, List<QuestionItem> questions) {
+    public GalleryItemAdapter(Context context) {
         this.context = context;
+        this.questions = List.of();
+    }
+
+    public void setQuestions(List<QuestionItem> questions) {
         this.questions = questions;
+        notifyDataSetChanged();
     }
 
     @NonNull

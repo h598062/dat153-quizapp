@@ -31,6 +31,7 @@ import androidx.core.content.FileProvider;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 
 import com.google.android.material.textfield.TextInputLayout;
@@ -44,7 +45,8 @@ import java.util.Locale;
 import no.dat153.quizzler.R;
 import no.dat153.quizzler.adapter.GalleryItemAdapter;
 import no.dat153.quizzler.databinding.ActivityGalleryBinding;
-import no.dat153.quizzler.utils.QuestionHelper;
+import no.dat153.quizzler.entity.QuestionItem;
+import no.dat153.quizzler.viewmodel.GalleryViewModel;
 
 public class GalleryActivity extends AppCompatActivity {
 
@@ -52,6 +54,7 @@ public class GalleryActivity extends AppCompatActivity {
     private final String TAG = this.getClass().getSimpleName();
     private ActivityGalleryBinding binding;
     private GalleryItemAdapter adapter;
+    private GalleryViewModel viewModel;
     private Animation fromBottom;
     private Animation fromTop;
     private Animation rotateOpen;
@@ -134,8 +137,11 @@ public class GalleryActivity extends AppCompatActivity {
         GridLayoutManager layoutManager = new GridLayoutManager(this, spanCount);
         binding.recyclerView.setLayoutManager(layoutManager);
 
-        adapter = new GalleryItemAdapter(this, QuestionHelper.getInstance().getQuestions());
+        adapter = new GalleryItemAdapter(this);
         binding.recyclerView.setAdapter(adapter);
+
+        viewModel = new ViewModelProvider(this).get(GalleryViewModel.class);
+        viewModel.getQuestions().observe(this, questions -> adapter.setQuestions(questions));
 
         setupBackButtonHandler();
         setupCamera();
@@ -208,7 +214,6 @@ public class GalleryActivity extends AppCompatActivity {
         d.findViewById(R.id.dialog_button).setOnClickListener(v -> {
             String text = textInput.getEditText().getText().toString();
             addQuestion(text, imageUri);
-            adapter.notifyItemInserted(QuestionHelper.getInstance().getQuestions().size() - 1);
             d.dismiss();
         });
         d.show();
@@ -216,7 +221,7 @@ public class GalleryActivity extends AppCompatActivity {
     }
 
     private void addQuestion(String text, Uri imageUri) {
-        QuestionHelper.getInstance().addNewQuestion(text, imageUri);
+        viewModel.add(new QuestionItem(text, imageUri));
     }
 
     /**

@@ -17,7 +17,7 @@ import no.dat153.quizzler.entity.QuestionItem;
  * Defines the methods that can be used to interact with the database.
  */
 @Dao
-public interface GalleryItemDAO {
+public interface QuestionItemDAO {
     /**
      * Inserts a new GalleryItem into the database.
      * If the item already exists, it will be replaced.
@@ -42,14 +42,16 @@ public interface GalleryItemDAO {
      * @param id The id of the Gallery item to retrieve.
      * @return The Gallery item with the given id.
      */
-    LiveData<QuestionItem> getGalleryItem(int id);
+    @Query("SELECT * FROM QuestionItem WHERE id = :id")
+    LiveData<QuestionItem> getQuestionItem(int id);
 
     /**
      * Retrieves all GalleryItems from the database.
      *
      * @return A list of all Gallery items in the database.
      */
-    LiveData<List<QuestionItem>> getAllGalleryItems();
+    @Query("SELECT * FROM QuestionItem")
+    LiveData<List<QuestionItem>> getAllQuestionItems();
 
     /**
      * Updates an existing GalleryItem in the database.

@@ -8,8 +8,10 @@ material = "1.12.0"
 activity = "1.10.0"
 constraintlayout = "2.2.0"
 catppuccin = "0.1.2"
+roomRuntime = "2.4.2"
 
 [libraries]
+compose = { module = "com.github.ShiftHackZ.Catppuccin-Android-Library:compose", version.ref = "catppuccin" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
@@ -21,6 +23,8 @@ catppuccin_compose = { module = "com.github.ShiftHackZ.Catppuccin-Android-Librar
 catppuccin_palette = { module = "com.github.ShiftHackZ.Catppuccin-Android-Library:palette", version.ref = "catppuccin" }
 catppuccin_palette-legacy = { module = "com.github.ShiftHackZ.Catppuccin-Android-Library:palette-legacy", version.ref = "catppuccin" }
 catppuccin_splashscreen = { module = "com.github.ShiftHackZ.Catppuccin-Android-Library:splashscreen", version.ref = "catppuccin" }
+room-compiler = { module = "androidx.room:room-compiler", version.ref = "roomRuntime" }
+room-runtime = { module = "androidx.room:room-runtime", version.ref = "roomRuntime" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

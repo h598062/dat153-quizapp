@@ -1,11 +1,8 @@
 package no.dat153.quizzler.viewmodel;
 
 import android.app.Application;
-import android.net.Uri;
-import android.view.View;
 
 import androidx.annotation.NonNull;
-import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -17,8 +14,6 @@ import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
-import no.dat153.quizzler.QuizFragment;
-import no.dat153.quizzler.R;
 import no.dat153.quizzler.data.QuestionRepo;
 import no.dat153.quizzler.entity.QuestionItem;
 
@@ -79,7 +74,7 @@ public class QuizViewModel extends ViewModel {
 
     public void settOppSvarAlternativer() {
         Random random = new Random();
-        correctItem = new MutableLiveData<>(questions.getValue().get(random.nextInt(questions.getValue().size())));
+        correctItem.setValue(questions.getValue().get(random.nextInt(questions.getValue().size())));
         Set<QuestionItem> svarAlternativer = new HashSet<>();
         svarAlternativer.add(correctItem.getValue());
 

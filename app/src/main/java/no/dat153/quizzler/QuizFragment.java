@@ -1,6 +1,8 @@
 package no.dat153.quizzler;
 
 import android.os.Bundle;
+import android.os.Looper;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,14 +11,14 @@ import android.widget.Button;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
+import com.shifthackz.catppuccin.palette.legacy.R.color;
+
 import java.util.HashSet;
 import java.util.Set;
 
 import no.dat153.quizzler.databinding.FragmentQuizBinding;
 import no.dat153.quizzler.entity.QuestionItem;
 import no.dat153.quizzler.viewmodel.QuizViewModel;
-
-import com.shifthackz.catppuccin.palette.legacy.R.color;
 
 
 /**
@@ -26,10 +28,13 @@ import com.shifthackz.catppuccin.palette.legacy.R.color;
  */
 public class QuizFragment extends Fragment {
 
+    private static final String TAG = QuizFragment.class.getSimpleName();
+
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    public static final String RESULT = "quizResult";
 
     private FragmentQuizBinding binding;
     private QuizViewModel quizViewModel;
@@ -72,7 +77,7 @@ public class QuizFragment extends Fragment {
         quizViewModel = new QuizViewModel(requireActivity().getApplication());
     }
 
-    private void oppdaterQuiz() {
+    private void settOppObservers() {
         quizViewModel.getQuestions().observe(getViewLifecycleOwner(), questionItems -> {
             if (questionItems != null) {
                 quizViewModel.settOppSvarAlternativer();
@@ -99,22 +104,48 @@ public class QuizFragment extends Fragment {
         binding = FragmentQuizBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
 
-        binding.btnAnswerA.setOnClickListener(v -> checkCorrectGuess(quizViewModel.getQuestionItems().getValue().get(0), v, binding.btnAnswerB, binding.btnAnswerC));
-        binding.btnAnswerB.setOnClickListener(v -> checkCorrectGuess(quizViewModel.getQuestionItems().getValue().get(1), v, binding.btnAnswerA, binding.btnAnswerC));
-        binding.btnAnswerC.setOnClickListener(v -> checkCorrectGuess(quizViewModel.getQuestionItems().getValue().get(2), v, binding.btnAnswerA, binding.btnAnswerB));
+        binding.btnAnswerA.setOnClickListener(v -> buttonListener(quizViewModel.getQuestionItems().getValue().get(0)));
+        binding.btnAnswerB.setOnClickListener(v -> buttonListener(quizViewModel.getQuestionItems().getValue().get(1)));
+        binding.btnAnswerC.setOnClickListener(v -> buttonListener(quizViewModel.getQuestionItems().getValue().get(2)));
 
-        oppdaterQuiz();
+        settOppObservers();
 
         return view;
     }
 
-    private void checkCorrectGuess(QuestionItem item, View v, Button otherBtn1, Button otherBtn2) {
-        if (quizViewModel.knappeTrykk(item)) {
-            v.setBackgroundColor(ContextCompat.getColor(requireContext(), color.catppuccin_mocha_green));
-            otherBtn1.setBackgroundColor(ContextCompat.getColor(requireContext(), color.catppuccin_mocha_red));
-            otherBtn2.setBackgroundColor(ContextCompat.getColor(requireContext(), color.catppuccin_mocha_red));
+    private void buttonListener(QuestionItem selectedAnswer) {
+        QuestionItem q1 = quizViewModel.getQuestionItems().getValue().get(0);
+        QuestionItem q2 = quizViewModel.getQuestionItems().getValue().get(1);
+        QuestionItem q3 = quizViewModel.getQuestionItems().getValue().get(2);
+        QuestionItem correctItem = quizViewModel.getCorrectItem().getValue();
+        Button correctButton;
+        Button incorrectButton1;
+        Button incorrectButton2;
+        if (q1.equals(correctItem)) {
+            correctButton = binding.btnAnswerA;
+            incorrectButton1 = binding.btnAnswerB;
+            incorrectButton2 = binding.btnAnswerC;
+        } else if (q2.equals(correctItem)) {
+            correctButton = binding.btnAnswerB;
+            incorrectButton1 = binding.btnAnswerA;
+            incorrectButton2 = binding.btnAnswerC;
+        } else if (q3.equals(correctItem)) {
+            correctButton = binding.btnAnswerC;
+            incorrectButton1 = binding.btnAnswerA;
+            incorrectButton2 = binding.btnAnswerB;
         } else {
-            v.setBackgroundColor(ContextCompat.getColor(requireContext(), color.catppuccin_mocha_red));
+            Log.d(TAG, "onCreateView: No correct item found");
+            return;
         }
+        correctButton.setBackgroundColor(ContextCompat.getColor(requireContext(), color.catppuccin_mocha_green));
+        incorrectButton1.setBackgroundColor(ContextCompat.getColor(requireContext(), color.catppuccin_mocha_red));
+        incorrectButton2.setBackgroundColor(ContextCompat.getColor(requireContext(), color.catppuccin_mocha_red));
+        quizViewModel.knappeTrykk(selectedAnswer);
+        new android.os.Handler(Looper.getMainLooper()).postDelayed(this::finish, 1000);
+    }
+
+    private void finish() {
+        Log.d(TAG, "finish: finished");
+        getParentFragmentManager().setFragmentResult(RESULT, new Bundle());
     }
 }

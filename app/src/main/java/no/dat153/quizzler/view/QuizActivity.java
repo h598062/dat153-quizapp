@@ -66,6 +66,16 @@ public class QuizActivity extends AppCompatActivity {
             transaction.commit();
         }
 
+        getSupportFragmentManager().setFragmentResultListener(QuizFragment.RESULT, this, (requestKey, bundle) -> {
+            FragmentManager fm = getSupportFragmentManager();
+            FragmentTransaction t = fm.beginTransaction();
+
+            QuizFragment quizFragment = new QuizFragment();
+            t.replace(R.id.fragmentQuiz, quizFragment, TAG);
+            t.commit();
+
+        });
+
     }
 
 }

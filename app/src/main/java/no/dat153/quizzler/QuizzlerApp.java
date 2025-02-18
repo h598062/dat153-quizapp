@@ -4,6 +4,8 @@ import android.app.Application;
 
 import androidx.appcompat.app.AppCompatDelegate;
 
+import com.shifthackz.catppuccin.palette.legacy.R.color;
+
 import java.util.ArrayList;
 import java.util.List;
 

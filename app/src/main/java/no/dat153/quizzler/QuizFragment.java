@@ -12,6 +12,8 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.shifthackz.catppuccin.palette.legacy.R.color;
+
 import java.util.HashSet;
 import java.util.Set;
 

@@ -10,8 +10,7 @@ import android.widget.Button;
 
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
-
-import com.shifthackz.catppuccin.palette.legacy.R.color;
+import androidx.lifecycle.ViewModelProvider;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -49,10 +48,6 @@ public class QuizFragment extends Fragment {
         // Required empty public constructor
     }
 
-    public QuizFragment(QuizViewModel quizViewModel) {
-        this.quizViewModel = quizViewModel;
-    }
-
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
@@ -63,7 +58,7 @@ public class QuizFragment extends Fragment {
      */
     // TODO: Rename and change types and number of parameters
     public static QuizFragment newInstance(QuizViewModel quizViewModel, String param1, String param2) {
-        QuizFragment fragment = new QuizFragment(quizViewModel);
+        QuizFragment fragment = new QuizFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -78,7 +73,6 @@ public class QuizFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-        quizViewModel = new QuizViewModel(requireActivity().getApplication());
     }
 
     private void settOppObservers() {
@@ -112,6 +106,8 @@ public class QuizFragment extends Fragment {
         // Inflate the layout for this fragment
         binding = FragmentQuizBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
+
+        quizViewModel = new ViewModelProvider(requireActivity()).get(QuizViewModel.class);
 
         binding.btnAnswerA.setOnClickListener(v -> buttonListener(quizViewModel.getQuestionItems().getValue().get(0)));
         binding.btnAnswerB.setOnClickListener(v -> buttonListener(quizViewModel.getQuestionItems().getValue().get(1)));

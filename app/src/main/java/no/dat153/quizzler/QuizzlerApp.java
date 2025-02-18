@@ -4,11 +4,10 @@ import android.app.Application;
 
 import androidx.appcompat.app.AppCompatDelegate;
 
-import com.shifthackz.catppuccin.palette.legacy.R.color;
-
 import java.util.ArrayList;
 import java.util.List;
 
+import no.dat153.quizzler.data.QuestionDatabase;
 import no.dat153.quizzler.view.GalleryActivity;
 import no.dat153.quizzler.view.MainActivity;
 import no.dat153.quizzler.view.QuizActivity;
@@ -43,6 +42,8 @@ public class QuizzlerApp extends Application {
         list.remove(color);
         color = getRandomColor(list);
         QuizActivity.setBgColor(color);
+
+        QuestionDatabase.getInstance(this);
 
     }
 

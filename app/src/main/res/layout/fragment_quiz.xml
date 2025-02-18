@@ -25,11 +25,10 @@
             android:id="@+id/imageView"
             android:layout_width="match_parent"
             android:layout_height="400dp"
+            android:layout_marginBottom="20dp"
             android:maxHeight="600dp"
             android:scaleType="centerInside"
-            android:src="@drawable/facetime_hamster_meme_10"
-            android:layout_marginBottom="20dp"
-            />
+            android:src="@drawable/ic_launcher_background" />
 
         <LinearLayout
             android:layout_width="match_parent"

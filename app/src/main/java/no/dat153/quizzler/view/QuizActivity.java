@@ -12,6 +12,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.ViewModelProvider;
 
 import no.dat153.quizzler.QuizFragment;
 import no.dat153.quizzler.R;
@@ -47,7 +48,7 @@ public class QuizActivity extends AppCompatActivity {
             return insets;
         });
 
-        quizViewModel = new QuizViewModel(getApplication());
+        quizViewModel = new ViewModelProvider(this).get(QuizViewModel.class);
 
         binding.layout.setBackgroundTintList(getColorStateList(bgColor));
         binding.fragmentQuiz.setBackgroundTintList(getColorStateList(bgColor));
@@ -62,25 +63,22 @@ public class QuizActivity extends AppCompatActivity {
             }
         });
 
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        loadFragment();
 
-        if (fragmentManager.findFragmentById(R.id.fragmentQuiz) == null) {
-            QuizFragment quizFragment = new QuizFragment(quizViewModel);
-            transaction.add(R.id.fragmentQuiz, quizFragment, TAG);
-            transaction.commit();
-        }
 
         getSupportFragmentManager().setFragmentResultListener(QuizFragment.RESULT, this, (requestKey, bundle) -> {
-            FragmentManager fm = getSupportFragmentManager();
-            FragmentTransaction t = fm.beginTransaction();
-
-            QuizFragment quizFragment = new QuizFragment(quizViewModel);
-            t.replace(R.id.fragmentQuiz, quizFragment, TAG);
-            t.commit();
-
+            loadFragment();
         });
 
+    }
+
+    private void loadFragment() {
+        FragmentManager fm = getSupportFragmentManager();
+        FragmentTransaction t = fm.beginTransaction();
+
+        QuizFragment fragment = new QuizFragment();
+        t.replace(binding.fragmentQuiz.getId(), fragment);
+        t.commit();
     }
 
 }

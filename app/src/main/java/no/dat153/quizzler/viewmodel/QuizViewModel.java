@@ -4,9 +4,9 @@ import android.app.Application;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -18,7 +18,7 @@ import java.util.Set;
 import no.dat153.quizzler.data.QuestionRepo;
 import no.dat153.quizzler.entity.QuestionItem;
 
-public class QuizViewModel extends ViewModel {
+public class QuizViewModel extends AndroidViewModel {
 
     private static final String TAG = QuizViewModel.class.getSimpleName();
     private QuestionRepo questionRepo;
@@ -30,6 +30,7 @@ public class QuizViewModel extends ViewModel {
     private MutableLiveData<QuestionItem> correctItem = new MutableLiveData<>();
 
     public QuizViewModel(@NonNull Application application) {
+        super(application);
         questionRepo = new QuestionRepo(application);
         questions = questionRepo.getAllQuestionItems();
     }
@@ -57,13 +58,20 @@ public class QuizViewModel extends ViewModel {
     public void knappeTrykk(QuestionItem item) {
 
         Log.d(TAG, "knappeTrykk:  " + item.getImageText() + " Correct Item: " + correctItem.getValue().getImageText());
-        if (item.equals(correctItem)) {
+        if (item.equals(correctItem.getValue())) {
             correctGuesses.setValue(correctGuesses.getValue() + 1);
+            Log.d(TAG, "knappeTrykk: Correct Guesses: " + correctGuesses.getValue());
         }
         totalGuesses.setValue(totalGuesses.getValue() + 1);
+        Log.d(TAG, "knappeTrykk: Total Guesses: " + totalGuesses.getValue());
     }
 
     public void settOppSvarAlternativer() {
+        Log.d(TAG, "settOppSvarAlternativer: antall spørsmål: " + questions.getValue().size());
+        if (questions.getValue().size() < 3) {
+            Log.d(TAG, "settOppSvarAlternativer: Ikke nok spørsmål");
+            return;
+        }
         Random random = new Random();
         correctItem.setValue(questions.getValue().get(random.nextInt(questions.getValue().size())));
         Set<QuestionItem> svarAlternativer = new HashSet<>();

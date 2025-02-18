@@ -49,6 +49,10 @@ public class QuizFragment extends Fragment {
         // Required empty public constructor
     }
 
+    public QuizFragment(QuizViewModel quizViewModel) {
+        this.quizViewModel = quizViewModel;
+    }
+
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
@@ -58,8 +62,8 @@ public class QuizFragment extends Fragment {
      * @return A new instance of fragment QuizFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static QuizFragment newInstance(String param1, String param2) {
-        QuizFragment fragment = new QuizFragment();
+    public static QuizFragment newInstance(QuizViewModel quizViewModel, String param1, String param2) {
+        QuizFragment fragment = new QuizFragment(quizViewModel);
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -95,6 +99,11 @@ public class QuizFragment extends Fragment {
                 binding.btnAnswerC.setText(questionItems.get(2).getImageText());
             }
         });
+        quizViewModel.getTotalGuesses().observe(getViewLifecycleOwner(), totalGuesses -> {
+            if (totalGuesses != null) {
+                binding.textView.setText(String.format("%d / %d", quizViewModel.getCorrectGuesses().getValue(), totalGuesses));
+            }
+        });
     }
 
     @Override
@@ -109,6 +118,8 @@ public class QuizFragment extends Fragment {
         binding.btnAnswerC.setOnClickListener(v -> buttonListener(quizViewModel.getQuestionItems().getValue().get(2)));
 
         settOppObservers();
+
+        binding.textView.setText(String.format("%d / %d", quizViewModel.getCorrectGuesses().getValue(), quizViewModel.getTotalGuesses().getValue()));
 
         return view;
     }

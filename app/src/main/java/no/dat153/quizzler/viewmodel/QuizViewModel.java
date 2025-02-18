@@ -1,6 +1,7 @@
 package no.dat153.quizzler.viewmodel;
 
 import android.app.Application;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
@@ -18,6 +19,8 @@ import no.dat153.quizzler.data.QuestionRepo;
 import no.dat153.quizzler.entity.QuestionItem;
 
 public class QuizViewModel extends ViewModel {
+
+    private static final String TAG = QuizViewModel.class.getSimpleName();
     private QuestionRepo questionRepo;
     private LiveData<List<QuestionItem>> questions;
     private MutableLiveData<Integer> correctGuesses = new MutableLiveData<>(0);
@@ -43,14 +46,6 @@ public class QuizViewModel extends ViewModel {
         return totalGuesses;
     }
 
-    public void setCorrectGuesses(MutableLiveData<Integer> correctGuesses) {
-        this.correctGuesses = correctGuesses;
-    }
-
-    public void setTotalGuesses(MutableLiveData<Integer> totalGuesses) {
-        this.totalGuesses = totalGuesses;
-    }
-
     public MutableLiveData<List<QuestionItem>> getQuestionItems() {
         return questionItems;
     }
@@ -59,17 +54,13 @@ public class QuizViewModel extends ViewModel {
         return correctItem;
     }
 
-    public boolean knappeTrykk(QuestionItem item) {
-        totalGuesses = getTotalGuesses();
-        totalGuesses.setValue(totalGuesses.getValue() + 1);
+    public void knappeTrykk(QuestionItem item) {
 
+        Log.d(TAG, "knappeTrykk:  " + item.getImageText() + " Correct Item: " + correctItem.getValue().getImageText());
         if (item.equals(correctItem)) {
-            correctGuesses = getCorrectGuesses();
             correctGuesses.setValue(correctGuesses.getValue() + 1);
-            return true;
-        } else {
-            return false;
         }
+        totalGuesses.setValue(totalGuesses.getValue() + 1);
     }
 
     public void settOppSvarAlternativer() {

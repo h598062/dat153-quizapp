@@ -16,12 +16,15 @@ import androidx.fragment.app.FragmentTransaction;
 import no.dat153.quizzler.QuizFragment;
 import no.dat153.quizzler.R;
 import no.dat153.quizzler.databinding.ActivityQuizBinding;
+import no.dat153.quizzler.viewmodel.QuizViewModel;
 
 public class QuizActivity extends AppCompatActivity {
 
     private static @ColorRes Integer bgColor;
     private final String TAG = this.getClass().getSimpleName();
     private ActivityQuizBinding binding;
+
+    private QuizViewModel quizViewModel;
 
     public static @ColorRes Integer getBgColor() {
         return bgColor;
@@ -44,6 +47,8 @@ public class QuizActivity extends AppCompatActivity {
             return insets;
         });
 
+        quizViewModel = new QuizViewModel(getApplication());
+
         binding.layout.setBackgroundTintList(getColorStateList(bgColor));
         binding.fragmentQuiz.setBackgroundTintList(getColorStateList(bgColor));
 
@@ -61,7 +66,7 @@ public class QuizActivity extends AppCompatActivity {
         FragmentTransaction transaction = fragmentManager.beginTransaction();
 
         if (fragmentManager.findFragmentById(R.id.fragmentQuiz) == null) {
-            QuizFragment quizFragment = new QuizFragment();
+            QuizFragment quizFragment = new QuizFragment(quizViewModel);
             transaction.add(R.id.fragmentQuiz, quizFragment, TAG);
             transaction.commit();
         }
@@ -70,7 +75,7 @@ public class QuizActivity extends AppCompatActivity {
             FragmentManager fm = getSupportFragmentManager();
             FragmentTransaction t = fm.beginTransaction();
 
-            QuizFragment quizFragment = new QuizFragment();
+            QuizFragment quizFragment = new QuizFragment(quizViewModel);
             t.replace(R.id.fragmentQuiz, quizFragment, TAG);
             t.commit();
 

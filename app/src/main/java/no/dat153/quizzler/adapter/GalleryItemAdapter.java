@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
+import androidx.core.util.Consumer;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
@@ -21,10 +22,18 @@ public class GalleryItemAdapter extends RecyclerView.Adapter<GalleryItemAdapter.
     private final String TAG = this.getClass().getSimpleName();
     private Context context;
     private List<QuestionItem> questions;
+    private final Consumer<Integer> longClickListener;
 
-    public GalleryItemAdapter(Context context) {
+    /**
+     * Konstruktør for adapter til Recyclerview i GalleryActivity
+     *
+     * @param context           Context som skal brukes
+     * @param longClickListener Callback metode som blir kjørt når et element blir lang-trykket på
+     */
+    public GalleryItemAdapter(Context context, Consumer<Integer> longClickListener) {
         this.context = context;
         this.questions = List.of();
+        this.longClickListener = longClickListener;
     }
 
     public void setQuestions(List<QuestionItem> questions) {
@@ -43,6 +52,17 @@ public class GalleryItemAdapter extends RecyclerView.Adapter<GalleryItemAdapter.
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.imageView.setImageURI(questions.get(position).getImageUri());
         holder.textView.setText(questions.get(position).getImageText());
+        holder.cardView.setOnLongClickListener(v -> {
+            if (longClickListener != null) {
+                longClickListener.accept(holder.getAdapterPosition());
+                return true; // Return true to indicate the event was handled
+            }
+            return false;
+        });
+    }
+
+    public QuestionItem getItemAtPosition(int position) {
+        return questions.get(position);
     }
 
     @Override

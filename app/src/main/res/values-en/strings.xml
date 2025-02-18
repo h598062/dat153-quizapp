@@ -5,8 +5,12 @@
     <string name="gallery_title">Gallery</string>
     <string name="quiz_title">Quiz</string>
     <string name="missing">missing text</string>
-    <string name="new_question_dialog_title">Text for the new question</string>
+    <string name="new_question_dialog_title">Text for the question</string>
     <string name="placeholder">placeholder</string>
     <string name="submit">Submit</string>
     <string name="new_question_dialog_hint">Write the text for this question</string>
+    <string name="edit_gallery_title">Edit Item</string>
+    <string name="edit_gallery_edit_button">Edit Text</string>
+    <string name="dismiss_dialog">Cancel</string>
+    <string name="edit_gallery_delete_button">Delete</string>
 </resources>

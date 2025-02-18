@@ -5,8 +5,12 @@
     <string name="gallery_title">Galleri</string>
     <string name="quiz_title">Quiz</string>
     <string name="missing">mangler tekst</string>
-    <string name="new_question_dialog_title">Tekst til det nye spørsmålet</string>
+    <string name="new_question_dialog_title">Tekst til spørsmålet</string>
     <string name="placeholder">plassholder</string>
     <string name="submit">Ok</string>
     <string name="new_question_dialog_hint">Skriv tekst til dette bildet</string>
+    <string name="edit_gallery_title">Rediger</string>
+    <string name="edit_gallery_edit_button">Rediger tekst</string>
+    <string name="dismiss_dialog">Avbryt</string>
+    <string name="edit_gallery_delete_button">Slett</string>
 </resources>

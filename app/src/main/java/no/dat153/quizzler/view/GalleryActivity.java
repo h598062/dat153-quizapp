@@ -2,6 +2,7 @@ package no.dat153.quizzler.view;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -29,6 +30,7 @@ import androidx.appcompat.widget.LinearLayoutCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 import androidx.core.graphics.Insets;
+import androidx.core.util.Consumer;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.lifecycle.ViewModelProvider;
@@ -137,7 +139,26 @@ public class GalleryActivity extends AppCompatActivity {
         GridLayoutManager layoutManager = new GridLayoutManager(this, spanCount);
         binding.recyclerView.setLayoutManager(layoutManager);
 
-        adapter = new GalleryItemAdapter(this);
+        adapter = new GalleryItemAdapter(this, position -> {
+            AlertDialog d = new AlertDialog.Builder(this)
+                    .setTitle(R.string.edit_gallery_title)
+                    .setPositiveButton(R.string.edit_gallery_edit_button, (dialog, which) -> {
+                        QuestionItem item = adapter.getItemAtPosition(position);
+                        showQuestionImageTextDialog(item.getImageUri(), newText -> {
+                            item.setImageText(newText);
+                            viewModel.update(item);
+                        });
+                    })
+                    .setNegativeButton(R.string.edit_gallery_delete_button, (dialog, which) -> {
+                        QuestionItem item = adapter.getItemAtPosition(position);
+                        viewModel.delete(item);
+                    })
+                    .setNeutralButton(R.string.dismiss_dialog, (dialog, which) -> {
+                        dialog.dismiss();
+                    })
+                    .create();
+            d.show();
+        });
         binding.recyclerView.setAdapter(adapter);
 
         viewModel = new ViewModelProvider(this).get(GalleryViewModel.class);
@@ -178,7 +199,7 @@ public class GalleryActivity extends AppCompatActivity {
                 // The image is saved at photoUri
                 // Toast.makeText(this, "Image saved to: " + photoUri.getPath(), Toast.LENGTH_LONG).show();
                 Log.d(TAG, "CameraLauncher: Image saved to: " + photoUri);
-                askForQuestionText(photoUri);
+                askForTextAndCreateQuestion(photoUri);
             }
         });
     }
@@ -192,12 +213,26 @@ public class GalleryActivity extends AppCompatActivity {
                 // Toast.makeText(this, "Image Selected: " + uri, Toast.LENGTH_SHORT).show();
                 Log.d(TAG, "GalleryLauncher: Selected image uri: " + uri);
                 getContentResolver().takePersistableUriPermission(uri, Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                askForQuestionText(uri);
+                askForTextAndCreateQuestion(uri);
             }
         });
     }
 
-    private void askForQuestionText(Uri imageUri) {
+    private void askForTextAndCreateQuestion(Uri imageUri) {
+        Consumer<String> callback = (text) -> {
+            addQuestion(text, imageUri);
+        };
+        showQuestionImageTextDialog(imageUri, callback);
+    }
+
+    /**
+     * Viser en dialog for å legge inn tekst til bildet
+     * <p>
+     *
+     * @param imageUri     Uri til bildet som skal vises i preview
+     * @param textCallback En callback metode som får inn innskrevet tekst som parameter
+     */
+    private void showQuestionImageTextDialog(Uri imageUri, Consumer<String> textCallback) {
         Dialog d = new Dialog(this);
         d.setContentView(R.layout.dialog_text_input_image_preview);
         d.setCancelable(false);
@@ -213,7 +248,7 @@ public class GalleryActivity extends AppCompatActivity {
 
         d.findViewById(R.id.dialog_button).setOnClickListener(v -> {
             String text = textInput.getEditText().getText().toString();
-            addQuestion(text, imageUri);
+            textCallback.accept(text);
             d.dismiss();
         });
         d.show();

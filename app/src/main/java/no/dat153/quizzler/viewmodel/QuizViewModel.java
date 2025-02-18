@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 import java.util.Set;
 
@@ -22,21 +23,44 @@ public class QuizViewModel extends AndroidViewModel {
 
     private static final String TAG = QuizViewModel.class.getSimpleName();
     private QuestionRepo questionRepo;
-    private LiveData<List<QuestionItem>> questions;
+    private LiveData<List<QuestionItem>> allQuestions;
     private MutableLiveData<Integer> correctGuesses = new MutableLiveData<>(0);
     private MutableLiveData<Integer> totalGuesses = new MutableLiveData<>(0);
-    private MutableLiveData<List<QuestionItem>> questionItems = new MutableLiveData<>();
+    private MutableLiveData<Map<String, QuestionItem>> currentQuestionOptions = new MutableLiveData<>();
 
-    private MutableLiveData<QuestionItem> correctItem = new MutableLiveData<>();
+    private MutableLiveData<QuestionItem> correctOption = new MutableLiveData<>();
+
+    private String correctButton = "";
 
     public QuizViewModel(@NonNull Application application) {
         super(application);
         questionRepo = new QuestionRepo(application);
-        questions = questionRepo.getAllQuestionItems();
+        allQuestions = questionRepo.getAllQuestionItems();
+        var observer = new androidx.lifecycle.Observer<List<QuestionItem>>() {
+            @Override
+            public void onChanged(List<QuestionItem> questionItems) {
+                Log.d(TAG, "QuizViewModel: Observer called");
+                settOppSvarAlternativer();
+                allQuestions.removeObserver(this);
+            }
+        };
+        allQuestions.observeForever(observer);
     }
 
-    public LiveData<List<QuestionItem>> getQuestions() {
-        return questions;
+    public String sjekkSvar(String buttonID) {
+
+        QuestionItem selectedAnswer = currentQuestionOptions.getValue().get(buttonID);
+        if (selectedAnswer.equals(correctOption.getValue())) {
+            correctGuesses.setValue(correctGuesses.getValue() + 1);
+            Log.d(TAG, "buttonOnClick: Correct Guesses: " + correctGuesses.getValue());
+        }
+        totalGuesses.setValue(totalGuesses.getValue() + 1);
+        Log.d(TAG, "knappeTrykk: Total Guesses: " + totalGuesses.getValue());
+        return correctButton;
+    }
+
+    public LiveData<List<QuestionItem>> getAllQuestions() {
+        return allQuestions;
     }
 
     public MutableLiveData<Integer> getCorrectGuesses() {
@@ -47,44 +71,46 @@ public class QuizViewModel extends AndroidViewModel {
         return totalGuesses;
     }
 
-    public MutableLiveData<List<QuestionItem>> getQuestionItems() {
-        return questionItems;
+    public MutableLiveData<Map<String, QuestionItem>> getCurrentQuestionOptions() {
+        return currentQuestionOptions;
     }
 
-    public MutableLiveData<QuestionItem> getCorrectItem() {
-        return correctItem;
-    }
-
-    public void knappeTrykk(QuestionItem item) {
-
-        Log.d(TAG, "knappeTrykk:  " + item.getImageText() + " Correct Item: " + correctItem.getValue().getImageText());
-        if (item.equals(correctItem.getValue())) {
-            correctGuesses.setValue(correctGuesses.getValue() + 1);
-            Log.d(TAG, "knappeTrykk: Correct Guesses: " + correctGuesses.getValue());
-        }
-        totalGuesses.setValue(totalGuesses.getValue() + 1);
-        Log.d(TAG, "knappeTrykk: Total Guesses: " + totalGuesses.getValue());
+    public MutableLiveData<QuestionItem> getCorrectOption() {
+        return correctOption;
     }
 
     public void settOppSvarAlternativer() {
-        Log.d(TAG, "settOppSvarAlternativer: antall spørsmål: " + questions.getValue().size());
-        if (questions.getValue().size() < 3) {
+        Log.d(TAG, "settOppSvarAlternativer: antall spørsmål: " + allQuestions.getValue().size());
+        if (allQuestions.getValue().size() < 3) {
             Log.d(TAG, "settOppSvarAlternativer: Ikke nok spørsmål");
             return;
         }
         Random random = new Random();
-        correctItem.setValue(questions.getValue().get(random.nextInt(questions.getValue().size())));
+        QuestionItem correct = allQuestions.getValue().get(random.nextInt(allQuestions.getValue().size()));
+        correctOption.setValue(correct);
         Set<QuestionItem> svarAlternativer = new HashSet<>();
-        svarAlternativer.add(correctItem.getValue());
+        svarAlternativer.add(correct);
 
         while (svarAlternativer.size() < 3) {
-            int tilfeldig = random.nextInt(questions.getValue().size());
-            svarAlternativer.add(questions.getValue().get(tilfeldig));
+            int tilfeldig = random.nextInt(allQuestions.getValue().size());
+            svarAlternativer.add(allQuestions.getValue().get(tilfeldig));
         }
 
         ArrayList<QuestionItem> svarListe = new ArrayList<>(svarAlternativer);
         Collections.shuffle(svarListe);
 
-        questionItems.setValue(svarListe);
+        Map<String, QuestionItem> svar = Map.of(
+                "A", svarListe.get(0),
+                "B", svarListe.get(1),
+                "C", svarListe.get(2)
+        );
+
+        svar.forEach((k, v) -> {
+            if (v.equals(correct)) {
+                correctButton = k;
+            }
+        });
+
+        currentQuestionOptions.setValue(svar);
     }
 }

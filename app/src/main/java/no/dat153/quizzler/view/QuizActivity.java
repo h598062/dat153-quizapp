@@ -75,7 +75,6 @@ public class QuizActivity extends AppCompatActivity {
     private void loadFragment() {
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction t = fm.beginTransaction();
-
         QuizFragment fragment = new QuizFragment();
         t.replace(binding.fragmentQuiz.getId(), fragment);
         t.commit();

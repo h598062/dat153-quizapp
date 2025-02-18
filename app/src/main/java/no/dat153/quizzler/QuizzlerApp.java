@@ -29,7 +29,7 @@ public class QuizzlerApp extends Application {
         list.add(color.catppuccin_mocha_lavender);
         list.add(color.catppuccin_mocha_yellow);
         list.add(color.catppuccin_mocha_pink);
-        list.add(color.catppuccin_mocha_green);
+        list.add(color.catppuccin_mocha_sapphire);
         list.add(color.catppuccin_mocha_flamingo);
         list.add(color.catppuccin_mocha_mauve);
         list.add(color.catppuccin_mocha_peach);

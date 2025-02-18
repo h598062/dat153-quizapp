@@ -36,5 +36,11 @@
             android:textColor="@color/catppuccin_mocha_maroon"
             android:textSize="60sp"
             android:textStyle="bold" />
+
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/fragmentQuiz"
+            android:name="no.dat153.quizzler.QuizFragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

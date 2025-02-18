@@ -11,4 +11,6 @@
     <string name="placeholder">placeholder</string>
     <string name="submit">Submit</string>
     <string name="new_question_dialog_hint">Write the text for this question</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

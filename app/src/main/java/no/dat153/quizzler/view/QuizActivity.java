@@ -10,7 +10,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
+import no.dat153.quizzler.QuizFragment;
 import no.dat153.quizzler.R;
 import no.dat153.quizzler.databinding.ActivityQuizBinding;
 
@@ -42,6 +45,7 @@ public class QuizActivity extends AppCompatActivity {
         });
 
         binding.layout.setBackgroundTintList(getColorStateList(bgColor));
+        binding.fragmentQuiz.setBackgroundTintList(getColorStateList(bgColor));
 
 
         getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
@@ -53,6 +57,14 @@ public class QuizActivity extends AppCompatActivity {
             }
         });
 
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+
+        if (fragmentManager.findFragmentById(R.id.fragmentQuiz) == null) {
+            QuizFragment quizFragment = new QuizFragment();
+            transaction.add(R.id.fragmentQuiz, quizFragment, TAG);
+            transaction.commit();
+        }
 
     }
 

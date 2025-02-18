@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".QuizFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="0/0"
+            android:textAlignment="viewEnd"
+            android:textColor="#000000"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="match_parent"
+            android:layout_height="400dp"
+            android:maxHeight="600dp"
+            android:scaleType="centerInside"
+            android:src="@drawable/facetime_hamster_meme_10"
+            android:layout_marginBottom="20dp"
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btnAnswerA"
+                android:layout_width="wrap_content"
+                android:layout_height="49dp"
+                android:layout_weight="1"
+                android:backgroundTint="@color/catppuccin_mocha_yellow"
+                android:elevation="8dp"
+                android:fontFamily="casual"
+                android:insetLeft="5dp"
+                android:insetTop="5dp"
+                android:insetRight="5dp"
+                android:insetBottom="5dp"
+                android:maxWidth="100dp"
+                android:shadowColor="@color/catppuccin_mocha_mantle"
+                android:shadowRadius="3"
+                android:text="tissefant"
+                android:textAlignment="center"
+                android:textColor="@color/catppuccin_mocha_maroon"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                app:autoSizeMaxTextSize="24sp"
+                app:autoSizeMinTextSize="12sp"
+                app:autoSizeTextType="uniform"
+                app:cornerRadius="15dp"
+                app:strokeColor="@color/catppuccin_mocha_base"
+                app:strokeWidth="2dp" />
+
+            <Button
+                android:id="@+id/btnAnswerB"
+                android:layout_width="wrap_content"
+                android:layout_height="49dp"
+                android:layout_weight="1"
+                android:backgroundTint="@color/catppuccin_mocha_yellow"
+                android:elevation="8dp"
+                android:fontFamily="casual"
+                android:insetLeft="5dp"
+                android:insetTop="5dp"
+                android:insetRight="5dp"
+                android:insetBottom="5dp"
+                android:maxWidth="100dp"
+                android:shadowColor="@color/catppuccin_mocha_mantle"
+                android:shadowRadius="3"
+                android:text="tissefant"
+                android:textAlignment="center"
+                android:textColor="@color/catppuccin_mocha_maroon"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                app:autoSizeMaxTextSize="24sp"
+                app:autoSizeMinTextSize="12sp"
+                app:autoSizeTextType="uniform"
+                app:cornerRadius="15dp"
+                app:strokeColor="@color/catppuccin_mocha_base"
+                app:strokeWidth="2dp" />
+
+            <Button
+                android:id="@+id/btnAnswerC"
+                android:layout_width="wrap_content"
+                android:layout_height="49dp"
+                android:layout_weight="1"
+                android:backgroundTint="@color/catppuccin_mocha_yellow"
+                android:elevation="8dp"
+                android:fontFamily="casual"
+                android:insetLeft="5dp"
+                android:insetTop="5dp"
+                android:insetRight="5dp"
+                android:insetBottom="5dp"
+                android:maxWidth="100dp"
+                android:shadowColor="@color/catppuccin_mocha_mantle"
+                android:shadowRadius="3"
+                android:text="tissefant"
+                android:textAlignment="center"
+                android:textColor="@color/catppuccin_mocha_maroon"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                app:autoSizeMaxTextSize="24sp"
+                app:autoSizeMinTextSize="12sp"
+                app:autoSizeTextType="uniform"
+                app:cornerRadius="15dp"
+                app:strokeColor="@color/catppuccin_mocha_base"
+                app:strokeWidth="2dp" />
+
+        </LinearLayout>
+    </LinearLayout>
+</FrameLayout>

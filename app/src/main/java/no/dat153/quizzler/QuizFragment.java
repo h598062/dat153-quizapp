@@ -70,7 +70,16 @@ public class QuizFragment extends Fragment {
 
     private void oppdaterQuiz() {
         // Oppdaterer quiz
-
+        quizViewModel = new QuizViewModel(requireActivity().getApplication());
+        quizViewModel.getQuestions().observe(getViewLifecycleOwner(), questions -> {
+            if (questions != null && !questions.isEmpty()) {
+                // Select a random image from the questions
+                Random random = new Random();
+                int randomIndex = random.nextInt(questions.size());
+                QuestionItem randomItem = questions.get(randomIndex);
+                binding.imageView.setImageURI(randomItem.getImageUri());
+            }
+        });
     }
 
     @Override
@@ -84,20 +93,7 @@ public class QuizFragment extends Fragment {
         binding.btnAnswerB.setOnClickListener(v -> knappeTrykk());
         binding.btnAnswerC.setOnClickListener(v -> knappeTrykk());
 
-        quizViewModel = new QuizViewModel(requireActivity().getApplication());
-        quizViewModel.getQuestions().observe(getViewLifecycleOwner(), questions -> {
-            if (questions != null && !questions.isEmpty()) {
-                // Select a random image from the questions
-                Random random = new Random();
-                int randomIndex = random.nextInt(questions.size());
-                QuestionItem randomItem = questions.get(randomIndex);
-                binding.imageView.setImageURI(randomItem.getImageUri());
-            }
-        });
-
-
-
-
+        oppdaterQuiz();
 
         return view;
     }

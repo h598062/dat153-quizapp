@@ -4,15 +4,20 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
+import android.widget.Button;
 
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
-import java.util.Random;
+import java.util.HashSet;
+import java.util.Set;
 
 import no.dat153.quizzler.databinding.FragmentQuizBinding;
 import no.dat153.quizzler.entity.QuestionItem;
 import no.dat153.quizzler.viewmodel.QuizViewModel;
+
+import com.shifthackz.catppuccin.palette.legacy.R.color;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -28,6 +33,8 @@ public class QuizFragment extends Fragment {
 
     private FragmentQuizBinding binding;
     private QuizViewModel quizViewModel;
+    private Set<QuestionItem> usedQuestionItems = new HashSet<>();
+
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -62,22 +69,25 @@ public class QuizFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-    }
-
-    private void knappeTrykk() {
-        Toast.makeText(getContext(), "Klikket på knapp", Toast.LENGTH_SHORT).show();
+        quizViewModel = new QuizViewModel(requireActivity().getApplication());
     }
 
     private void oppdaterQuiz() {
-        // Oppdaterer quiz
-        quizViewModel = new QuizViewModel(requireActivity().getApplication());
-        quizViewModel.getQuestions().observe(getViewLifecycleOwner(), questions -> {
-            if (questions != null && !questions.isEmpty()) {
-                // Select a random image from the questions
-                Random random = new Random();
-                int randomIndex = random.nextInt(questions.size());
-                QuestionItem randomItem = questions.get(randomIndex);
-                binding.imageView.setImageURI(randomItem.getImageUri());
+        quizViewModel.getQuestions().observe(getViewLifecycleOwner(), questionItems -> {
+            if (questionItems != null) {
+                quizViewModel.settOppSvarAlternativer();
+            }
+        });
+        quizViewModel.getCorrectItem().observe(getViewLifecycleOwner(), questionItem -> {
+            if (questionItem != null) {
+                binding.imageView.setImageURI(questionItem.getImageUri());
+            }
+        });
+        quizViewModel.getQuestionItems().observe(getViewLifecycleOwner(), questionItems -> {
+            if (questionItems != null) {
+                binding.btnAnswerA.setText(questionItems.get(0).getImageText());
+                binding.btnAnswerB.setText(questionItems.get(1).getImageText());
+                binding.btnAnswerC.setText(questionItems.get(2).getImageText());
             }
         });
     }
@@ -89,12 +99,22 @@ public class QuizFragment extends Fragment {
         binding = FragmentQuizBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
 
-        binding.btnAnswerA.setOnClickListener(v -> knappeTrykk());
-        binding.btnAnswerB.setOnClickListener(v -> knappeTrykk());
-        binding.btnAnswerC.setOnClickListener(v -> knappeTrykk());
+        binding.btnAnswerA.setOnClickListener(v -> checkCorrectGuess(quizViewModel.getQuestionItems().getValue().get(0), v, binding.btnAnswerB, binding.btnAnswerC));
+        binding.btnAnswerB.setOnClickListener(v -> checkCorrectGuess(quizViewModel.getQuestionItems().getValue().get(1), v, binding.btnAnswerA, binding.btnAnswerC));
+        binding.btnAnswerC.setOnClickListener(v -> checkCorrectGuess(quizViewModel.getQuestionItems().getValue().get(2), v, binding.btnAnswerA, binding.btnAnswerB));
 
         oppdaterQuiz();
 
         return view;
+    }
+
+    private void checkCorrectGuess(QuestionItem item, View v, Button otherBtn1, Button otherBtn2) {
+        if (quizViewModel.knappeTrykk(item)) {
+            v.setBackgroundColor(ContextCompat.getColor(requireContext(), color.catppuccin_mocha_green));
+            otherBtn1.setBackgroundColor(ContextCompat.getColor(requireContext(), color.catppuccin_mocha_red));
+            otherBtn2.setBackgroundColor(ContextCompat.getColor(requireContext(), color.catppuccin_mocha_red));
+        } else {
+            v.setBackgroundColor(ContextCompat.getColor(requireContext(), color.catppuccin_mocha_red));
+        }
     }
 }

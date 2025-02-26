@@ -10,8 +10,13 @@ constraintlayout = "2.2.0"
 catppuccin = "0.1.2"
 roomRuntime = "2.6.1"
 glide = "4.16.0"
+rules = "1.6.1"
+runner = "1.6.2"
 
 [libraries]
+androidx-espresso-intents = { module = "androidx.test.espresso:espresso-intents", version.ref = "espressoCore" }
+androidx-rules = { module = "androidx.test:rules", version.ref = "rules" }
+androidx-runner = { module = "androidx.test:runner", version.ref = "runner" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }

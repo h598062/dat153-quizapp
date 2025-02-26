@@ -41,24 +41,33 @@ android {
 }
 
 dependencies {
-
+    // Core dependencies
     implementation(libs.appcompat)
     implementation(libs.material)
     implementation(libs.activity)
     implementation(libs.constraintlayout)
 
+    // UI Theming (Catppuccin)
     implementation(libs.catppuccin.palette.legacy)
     implementation(libs.catppuccin.palette)
     implementation(libs.catppuccin.compose)
     implementation(libs.catppuccin.splashscreen)
 
+    // Glide for image loading
     implementation(libs.glide.lib)
     annotationProcessor(libs.glide.annotation)
 
+    // Room Database
     implementation(libs.room.runtime)
     annotationProcessor(libs.room.compiler)
 
+    // Unit testing
     testImplementation(libs.junit)
+
+    // Android Instrumentation testing
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
+    androidTestImplementation(libs.androidx.espresso.intents)
+    androidTestImplementation(libs.androidx.rules)
+    androidTestImplementation(libs.androidx.runner)
 }

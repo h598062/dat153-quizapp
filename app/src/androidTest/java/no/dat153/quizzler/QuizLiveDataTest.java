@@ -16,6 +16,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.util.Objects;
+import java.util.concurrent.TimeoutException;
 
 import no.dat153.quizzler.entity.QuestionItem;
 import no.dat153.quizzler.view.QuizActivity;
@@ -39,19 +40,24 @@ public class QuizLiveDataTest {
         activityScenarioRule.getScenario().onActivity(activity -> {
             viewModel = activity.getViewModel();
         });
-    }
-
-    @Test
-    public void testButtonClickWaitsForCorrectAnswerLiveData() {
         // 1. Define the idle condition: Wait until correctAnswerLiveData has a non-null value
         correctAnswerLiveDataIdlingResource = new LiveDataIdlingResource<>(viewModel.getCorrectOption(),
-                Objects::nonNull // Idle when correctAnswerLiveData is not null
+                noe -> {
+                    return Objects.nonNull(noe);
+                }
         );
 
         // 2. Register the IdlingResource
         IdlingRegistry.getInstance().register(correctAnswerLiveDataIdlingResource);
+    }
+
+    @Test
+    public void testButtonClickWaitsForCorrectAnswerLiveData() throws InterruptedException, TimeoutException {
+
 
         Log.d(TAG, "testButtonClickWaitsForCorrectAnswerLiveData: registered IdlingResource, should now wait");
+
+        correctAnswerLiveDataIdlingResource.waitForIdle(10);
 
         // 3. Get the expected correct answer from ViewModel (inside onActivity - OK)
         activityScenarioRule.getScenario().onActivity(activity -> {

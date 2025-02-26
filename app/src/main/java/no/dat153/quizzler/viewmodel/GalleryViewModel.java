@@ -14,20 +14,21 @@ import java.util.Comparator;
 import java.util.List;
 
 import no.dat153.quizzler.data.QuestionRepo;
+import no.dat153.quizzler.data.QuestionRepoInterface;
 import no.dat153.quizzler.entity.QuestionItem;
 
 public class GalleryViewModel extends AndroidViewModel {
     public static final int NO_SORT = 0;
     public static final int SORT_AtoZ = 1;
     public static final int SORT_ZtoA = 2;
-    private QuestionRepo questionRepo;
+    private QuestionRepoInterface questionRepo;
     private LiveData<List<QuestionItem>> allQuestions;
     private LiveData<List<QuestionItem>> sortedQuestions;
     private MutableLiveData<Integer> sortDirection = new MutableLiveData<>(NO_SORT);
 
     public GalleryViewModel(@NonNull Application application) {
         super(application);
-        questionRepo = new QuestionRepo(application);
+        questionRepo = QuestionRepo.getInstance(application);
         allQuestions = questionRepo.getAllQuestionItems();
         sortedQuestions = Transformations.switchMap(sortDirection, sortOrder -> {
             return Transformations.map(allQuestions, questions -> {

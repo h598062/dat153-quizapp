@@ -10,34 +10,48 @@ import java.util.concurrent.Executors;
 
 import no.dat153.quizzler.entity.QuestionItem;
 
-public class QuestionRepo {
+public class QuestionRepo implements QuestionRepoInterface {
     private QuestionItemDAO questionItemDao;
     private LiveData<List<QuestionItem>> allQuestionItems;
     private ExecutorService executorService;
 
-    public QuestionRepo(Application application) {
+    private static QuestionRepo INSTANCE;
+
+    private QuestionRepo(Application application) {
         QuestionDatabase db = QuestionDatabase.getInstance(application);
         questionItemDao = db.questionItemDAO();
         allQuestionItems = questionItemDao.getAllQuestionItems();
         executorService = Executors.newSingleThreadExecutor(); // Runs async operations
     }
 
+    public static QuestionRepo getInstance(Application application) {
+        if (INSTANCE == null) {
+            INSTANCE = new QuestionRepo(application);
+        }
+        return INSTANCE;
+    }
+
+    @Override
     public LiveData<List<QuestionItem>> getAllQuestionItems() {
         return allQuestionItems;
     }
 
+    @Override
     public void insert(QuestionItem item) {
         executorService.execute(() -> questionItemDao.insert(item));
     }
 
+    @Override
     public void update(QuestionItem item) {
         executorService.execute(() -> questionItemDao.update(item));
     }
 
+    @Override
     public void delete(QuestionItem item) {
         executorService.execute(() -> questionItemDao.delete(item));
     }
 
+    @Override
     public void deleteAll() {
         executorService.execute(() -> questionItemDao.deleteAll());
     }

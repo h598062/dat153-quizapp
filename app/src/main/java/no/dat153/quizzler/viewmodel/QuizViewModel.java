@@ -16,13 +16,13 @@ import java.util.Map;
 import java.util.Random;
 import java.util.Set;
 
-import no.dat153.quizzler.data.QuestionRepo;
+import no.dat153.quizzler.data.QuestionRepoInterface;
 import no.dat153.quizzler.entity.QuestionItem;
 
 public class QuizViewModel extends AndroidViewModel {
 
     private static final String TAG = QuizViewModel.class.getSimpleName();
-    private QuestionRepo questionRepo;
+    private final QuestionRepoInterface questionRepo;
     private LiveData<List<QuestionItem>> allQuestions;
     private MutableLiveData<Integer> correctGuesses = new MutableLiveData<>(0);
     private MutableLiveData<Integer> totalGuesses = new MutableLiveData<>(0);
@@ -32,10 +32,10 @@ public class QuizViewModel extends AndroidViewModel {
 
     private String correctButton = "";
 
-    public QuizViewModel(@NonNull Application application) {
+    public QuizViewModel(@NonNull Application application, @NonNull QuestionRepoInterface questionRepo) {
         super(application);
-        questionRepo = new QuestionRepo(application);
-        allQuestions = questionRepo.getAllQuestionItems();
+        this.questionRepo = questionRepo;
+        allQuestions = this.questionRepo.getAllQuestionItems();
         var observer = new androidx.lifecycle.Observer<List<QuestionItem>>() {
             @Override
             public void onChanged(List<QuestionItem> questionItems) {

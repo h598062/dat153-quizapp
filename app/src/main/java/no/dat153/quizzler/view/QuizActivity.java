@@ -16,8 +16,10 @@ import androidx.lifecycle.ViewModelProvider;
 
 import no.dat153.quizzler.QuizFragment;
 import no.dat153.quizzler.R;
+import no.dat153.quizzler.data.QuestionRepo;
 import no.dat153.quizzler.databinding.ActivityQuizBinding;
 import no.dat153.quizzler.viewmodel.QuizViewModel;
+import no.dat153.quizzler.viewmodel.QuizViewModelFactory;
 
 public class QuizActivity extends AppCompatActivity {
 
@@ -48,7 +50,9 @@ public class QuizActivity extends AppCompatActivity {
             return insets;
         });
 
-        viewModel = new ViewModelProvider(this).get(QuizViewModel.class);
+        QuestionRepo repo = QuestionRepo.getInstance(getApplication());
+        ViewModelProvider.Factory factory = new QuizViewModelFactory(getApplication(), repo);
+        viewModel = new ViewModelProvider(this, factory).get(QuizViewModel.class);
 
         binding.layout.setBackgroundTintList(getColorStateList(bgColor));
         binding.fragmentQuiz.setBackgroundTintList(getColorStateList(bgColor));

@@ -1,37 +1,69 @@
 [versions]
+# android
 agp = "8.8.1"
-junit = "4.13.2"
-junitVersion = "1.2.1"
-espressoCore = "3.6.1"
 appcompat = "1.7.0"
 material = "1.12.0"
 activity = "1.10.0"
 constraintlayout = "2.2.0"
+
+# test
+jUnitVersion = "4.13.2"
+androidXTestVersion = "1.6.1"
+testRulesVersion = "1.6.1"
+testRunnerVersion = "1.6.2"
+testJunitVersion = "1.2.1"
+espressoVersion = "3.6.1"
+mockitoVersion = "5.15.2"
+
+# catppuccin
 catppuccin = "0.1.2"
+
+# room
 roomRuntime = "2.6.1"
+
+# glide
 glide = "4.16.0"
-rules = "1.6.1"
-runner = "1.6.2"
 
 [libraries]
-androidx-espresso-intents = { module = "androidx.test.espresso:espresso-intents", version.ref = "espressoCore" }
-androidx-rules = { module = "androidx.test:rules", version.ref = "rules" }
-androidx-runner = { module = "androidx.test:runner", version.ref = "runner" }
-junit = { group = "junit", name = "junit", version.ref = "junit" }
-ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
+# test core
+androidx-test-core = { module = "androidx.test:core", version.ref = "androidXTestVersion" }
+androidx-test-runner = { module = "androidx.test:runner", version.ref = "testRunnerVersion" }
+androidx-test-rules = { module = "androidx.test:rules", version.ref = "testRulesVersion" }
+# junit assertions
+junit = { module = "junit:junit", version.ref = "jUnitVersion" }
+androidx-junit = { module = "androidx.test.ext:junit", version.ref = "testJunitVersion" }
+# mockito
+mockito = { module = "org.mockito:mockito-core", version.ref = "mockitoVersion" }
+
+# test espresso
+espresso-core = { module = "androidx.test.espresso:espresso-core", version.ref = "espressoVersion" }
+espresso-contrib = { module = "androidx.test.espresso:espresso-contrib", version.ref = "espressoVersion" }
+espresso-intents = { module = "androidx.test.espresso:espresso-intents", version.ref = "espressoVersion" }
+espresso-accessibility = { module = "androidx.test.espresso:espresso-accessibility", version.ref = "espressoVersion" }
+# espresso-web = { module = "androidx.test.espresso:espresso-web", version.ref = "espressoVersion" }
+espresso-idling-concurrent = { module = "androidx.test.espresso.idling:idling-concurrent", version.ref = "espressoVersion" }
+espresso-idling-resource = { module = "androidx.test.espresso:espresso-idling-resource", version.ref = "espressoVersion" }
+
+
+# android stuff
 appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 activity = { group = "androidx.activity", name = "activity", version.ref = "activity" }
 constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
-catppuccin_compose = { module = "com.github.ShiftHackZ.Catppuccin-Android-Library:compose", name = "catppuccin_compose", version.ref = "catppuccin" }
-catppuccin_palette = { module = "com.github.ShiftHackZ.Catppuccin-Android-Library:palette", name = "catppuccin_palette", version.ref = "catppuccin" }
-catppuccin_palette-legacy = { module = "com.github.ShiftHackZ.Catppuccin-Android-Library:palette-legacy", name = "catppuccin_palette-legacy", version.ref = "catppuccin" }
-catppuccin_splashscreen = { module = "com.github.ShiftHackZ.Catppuccin-Android-Library:splashscreen", name = "catppuccin_splashscreen", version.ref = "catppuccin" }
-room-compiler = { module = "androidx.room:room-compiler", name = "roomCompiler", version.ref = "roomRuntime" }
-room-runtime = { module = "androidx.room:room-runtime", name = "roomRuntime", version.ref = "roomRuntime" }
-glide_lib = { module = "com.github.bumptech.glide:glide", name = "glide_lib", version.ref = "glide" }
-glide_annotation = { module = "com.github.bumptech.glide:compiler", name = "glide_annotation", version.ref = "glide" }
+
+# room database
+room-compiler = { module = "androidx.room:room-compiler", version.ref = "roomRuntime" }
+room-runtime = { module = "androidx.room:room-runtime", version.ref = "roomRuntime" }
+
+# catppuccin colors
+catppuccin_compose = { module = "com.github.ShiftHackZ.Catppuccin-Android-Library:compose", version.ref = "catppuccin" }
+catppuccin_palette = { module = "com.github.ShiftHackZ.Catppuccin-Android-Library:palette", version.ref = "catppuccin" }
+catppuccin_palette-legacy = { module = "com.github.ShiftHackZ.Catppuccin-Android-Library:palette-legacy", version.ref = "catppuccin" }
+catppuccin_splashscreen = { module = "com.github.ShiftHackZ.Catppuccin-Android-Library:splashscreen", version.ref = "catppuccin" }
+
+# glide for image loading
+glide_lib = { module = "com.github.bumptech.glide:glide", version.ref = "glide" }
+glide_annotation = { module = "com.github.bumptech.glide:compiler", version.ref = "glide" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

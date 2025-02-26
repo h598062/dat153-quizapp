@@ -35,8 +35,8 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
 }
 
@@ -63,11 +63,20 @@ dependencies {
 
     // Unit testing
     testImplementation(libs.junit)
+    testImplementation(libs.mockito)
+    testImplementation(libs.androidx.test.core)
 
     // Android Instrumentation testing
-    androidTestImplementation(libs.ext.junit)
+    androidTestImplementation(libs.androidx.test.core)
+    androidTestImplementation(libs.androidx.test.rules)
+    androidTestImplementation(libs.androidx.test.runner)
+    androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.espresso.core)
-    androidTestImplementation(libs.androidx.espresso.intents)
-    androidTestImplementation(libs.androidx.rules)
-    androidTestImplementation(libs.androidx.runner)
+    androidTestImplementation(libs.espresso.contrib)
+    androidTestImplementation(libs.espresso.intents)
+    androidTestImplementation(libs.espresso.accessibility)
+    androidTestImplementation(libs.espresso.idling.concurrent)
+    // has to be implementation because the resources used are not available in androidTestImplementation
+    implementation(libs.espresso.idling.resource)
+
 }

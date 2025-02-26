@@ -25,7 +25,7 @@ public class QuizActivity extends AppCompatActivity {
     private final String TAG = this.getClass().getSimpleName();
     private ActivityQuizBinding binding;
 
-    private QuizViewModel quizViewModel;
+    private QuizViewModel viewModel;
 
     public static @ColorRes Integer getBgColor() {
         return bgColor;
@@ -48,7 +48,7 @@ public class QuizActivity extends AppCompatActivity {
             return insets;
         });
 
-        quizViewModel = new ViewModelProvider(this).get(QuizViewModel.class);
+        viewModel = new ViewModelProvider(this).get(QuizViewModel.class);
 
         binding.layout.setBackgroundTintList(getColorStateList(bgColor));
         binding.fragmentQuiz.setBackgroundTintList(getColorStateList(bgColor));
@@ -80,4 +80,7 @@ public class QuizActivity extends AppCompatActivity {
         t.commit();
     }
 
+    public QuizViewModel getViewModel() {
+        return viewModel;
+    }
 }

@@ -11,6 +11,7 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.bumptech.glide.Glide;
 import com.shifthackz.catppuccin.palette.legacy.R.color;
 
 import java.util.HashSet;
@@ -84,7 +85,10 @@ public class QuizFragment extends Fragment {
     private void settOppObservers() {
         quizViewModel.getCorrectOption().observe(getViewLifecycleOwner(), questionItem -> {
             if (questionItem != null) {
-                binding.imageView.setImageURI(questionItem.getImageUri());
+                // binding.imageView.setImageURI(questionItem.getImageUri());
+                Glide.with(binding.getRoot().getContext())
+                        .load(questionItem.getImageUri())
+                        .into(binding.imageView);
             }
         });
         quizViewModel.getCurrentQuestionOptions().observe(getViewLifecycleOwner(), questionItems -> {

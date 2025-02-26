@@ -40,7 +40,6 @@ android {
     }
 }
 
-val room_version = "2.4.2"
 dependencies {
 
     implementation(libs.appcompat)
@@ -52,6 +51,9 @@ dependencies {
     implementation(libs.catppuccin.palette)
     implementation(libs.catppuccin.compose)
     implementation(libs.catppuccin.splashscreen)
+
+    implementation(libs.glide.lib)
+    annotationProcessor(libs.glide.annotation)
 
     implementation(libs.room.runtime)
     annotationProcessor(libs.room.compiler)

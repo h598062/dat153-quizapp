@@ -36,6 +36,7 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 
+import com.bumptech.glide.Glide;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.io.File;
@@ -238,7 +239,10 @@ public class GalleryActivity extends AppCompatActivity {
         d.setCancelable(false);
 
         ImageView imageView = d.findViewById(R.id.dialog_image);
-        imageView.setImageURI(imageUri);
+//        imageView.setImageURI(imageUri);
+        Glide.with(binding.getRoot().getContext())
+                .load(imageUri)
+                .into(imageView);
 
         TextView title = d.findViewById(R.id.dialog_title);
         title.setText(R.string.new_question_dialog_title);

@@ -12,6 +12,8 @@ import androidx.cardview.widget.CardView;
 import androidx.core.util.Consumer;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+
 import java.util.List;
 
 import no.dat153.quizzler.R;
@@ -50,7 +52,14 @@ public class GalleryItemAdapter extends RecyclerView.Adapter<GalleryItemAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.imageView.setImageURI(questions.get(position).getImageUri());
+
+        // holder.imageView.setImageURI(questions.get(position).getImageUri());
+        Glide.with(holder.itemView.getContext()) // or holder.imageView.getContext()
+                .load(questions.get(position).getImageUri()) // Load from URI
+//                .placeholder(R.drawable.placeholder_image) // Optional placeholder while loading
+//                .error(R.drawable.error_image) // Optional error image if loading fails
+                .into(holder.imageView); // Target ImageView
+
         holder.textView.setText(questions.get(position).getImageText());
         holder.cardView.setOnLongClickListener(v -> {
             if (longClickListener != null) {
@@ -84,4 +93,3 @@ public class GalleryItemAdapter extends RecyclerView.Adapter<GalleryItemAdapter.
         }
     }
 }
-

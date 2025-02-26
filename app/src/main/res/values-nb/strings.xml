@@ -13,4 +13,7 @@
     <string name="edit_gallery_edit_button">Rediger tekst</string>
     <string name="dismiss_dialog">Avbryt</string>
     <string name="edit_gallery_delete_button">Slett</string>
+    <string name="sort_button_none">Ingen Sortering</string>
+    <string name="sort_button_az">A til Z</string>
+    <string name="sort_button_za">Z til A</string>
 </resources>

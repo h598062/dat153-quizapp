@@ -37,6 +37,69 @@
             android:textSize="60sp"
             android:textStyle="bold" />
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="0dp"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingHorizontal="10dp">
+
+            <Button
+                android:id="@+id/btnSortNone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginHorizontal="10dp"
+                android:backgroundTint="@color/catppuccin_mocha_red"
+                android:text="@string/sort_button_none"
+                android:textAlignment="center"
+                android:textColor="@color/catppuccin_mocha_text"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:shadowColor="@color/catppuccin_mocha_mantle"
+                android:shadowRadius="3"
+                app:cornerRadius="15dp"
+                app:strokeColor="@color/catppuccin_mocha_base"
+                app:strokeWidth="2dp" />
+
+            <Button
+                android:id="@+id/btnSortAZ"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginHorizontal="10dp"
+                android:backgroundTint="@color/catppuccin_mocha_red"
+                android:text="@string/sort_button_az"
+                android:textAlignment="center"
+                android:textColor="@color/catppuccin_mocha_text"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:shadowColor="@color/catppuccin_mocha_mantle"
+                android:shadowRadius="3"
+                app:cornerRadius="15dp"
+                app:strokeColor="@color/catppuccin_mocha_base"
+                app:strokeWidth="2dp" />
+
+            <Button
+                android:id="@+id/btnSortZA"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginHorizontal="10dp"
+                android:backgroundTint="@color/catppuccin_mocha_red"
+                android:text="@string/sort_button_za"
+                android:textAlignment="center"
+                android:textColor="@color/catppuccin_mocha_text"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:shadowColor="@color/catppuccin_mocha_mantle"
+                android:shadowRadius="3"
+                app:cornerRadius="15dp"
+                app:strokeColor="@color/catppuccin_mocha_base"
+                app:strokeWidth="2dp" />
+        </LinearLayout>
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"

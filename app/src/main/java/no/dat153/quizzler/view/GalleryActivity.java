@@ -38,6 +38,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 
 import com.bumptech.glide.Glide;
 import com.google.android.material.textfield.TextInputLayout;
+import com.shifthackz.catppuccin.palette.legacy.R.color;
 
 import java.io.File;
 import java.io.IOException;
@@ -135,6 +136,15 @@ public class GalleryActivity extends AppCompatActivity {
             closeMenu();
         });
 
+        binding.btnSortNone.setOnClickListener(v -> {
+            viewModel.setSortDirection(GalleryViewModel.NO_SORT);
+        });
+        binding.btnSortAZ.setOnClickListener(v -> {
+            viewModel.setSortDirection(GalleryViewModel.SORT_AtoZ);
+        });
+        binding.btnSortZA.setOnClickListener(v -> {
+            viewModel.setSortDirection(GalleryViewModel.SORT_ZtoA);
+        });
 
         int spanCount = calculateSpanCount();
         GridLayoutManager layoutManager = new GridLayoutManager(this, spanCount);
@@ -164,6 +174,26 @@ public class GalleryActivity extends AppCompatActivity {
 
         viewModel = new ViewModelProvider(this).get(GalleryViewModel.class);
         viewModel.getQuestions().observe(this, questions -> adapter.setQuestions(questions));
+        viewModel.getSortDirection().observe(this, sortDirection -> {
+            switch (sortDirection) {
+                case GalleryViewModel.SORT_AtoZ:
+                    binding.btnSortAZ.setBackgroundTintList(getColorStateList(color.catppuccin_mocha_green));
+                    binding.btnSortZA.setBackgroundTintList(getColorStateList(color.catppuccin_mocha_red));
+                    binding.btnSortNone.setBackgroundTintList(getColorStateList(color.catppuccin_mocha_red));
+                    break;
+                case GalleryViewModel.SORT_ZtoA:
+                    binding.btnSortAZ.setBackgroundTintList(getColorStateList(color.catppuccin_mocha_red));
+                    binding.btnSortZA.setBackgroundTintList(getColorStateList(color.catppuccin_mocha_green));
+                    binding.btnSortNone.setBackgroundTintList(getColorStateList(color.catppuccin_mocha_red));
+                    break;
+                case GalleryViewModel.NO_SORT:
+                default:
+                    binding.btnSortAZ.setBackgroundTintList(getColorStateList(color.catppuccin_mocha_red));
+                    binding.btnSortZA.setBackgroundTintList(getColorStateList(color.catppuccin_mocha_red));
+                    binding.btnSortNone.setBackgroundTintList(getColorStateList(color.catppuccin_mocha_green));
+                    break;
+            }
+        });
 
         setupBackButtonHandler();
         setupCamera();

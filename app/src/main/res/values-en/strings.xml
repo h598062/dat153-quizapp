@@ -13,4 +13,7 @@
     <string name="edit_gallery_edit_button">Edit Text</string>
     <string name="dismiss_dialog">Cancel</string>
     <string name="edit_gallery_delete_button">Delete</string>
+    <string name="sort_button_none">No sort</string>
+    <string name="sort_button_az">A to Z</string>
+    <string name="sort_button_za">Z to A</string>
 </resources>

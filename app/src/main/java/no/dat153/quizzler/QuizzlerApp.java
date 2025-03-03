@@ -45,7 +45,8 @@ public class QuizzlerApp extends Application {
         color = getRandomColor(list);
         QuizActivity.setBgColor(color);
 
-        QuestionDatabase.getInstance(this);
+        QuestionDatabase instance = QuestionDatabase.getInstance(this);
+        instance.questionItemDAO().getAllQuestionItems();
 
     }
 

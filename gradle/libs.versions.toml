@@ -1,6 +1,6 @@
 [versions]
 # android
-agp = "8.8.2"
+agp = "8.9.0"
 appcompat = "1.7.0"
 material = "1.12.0"
 activity = "1.10.1"

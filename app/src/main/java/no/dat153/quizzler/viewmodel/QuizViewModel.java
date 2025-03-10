@@ -40,8 +40,9 @@ public class QuizViewModel extends AndroidViewModel {
             @Override
             public void onChanged(List<QuestionItem> questionItems) {
                 Log.d(TAG, "QuizViewModel: Observer called");
-                settOppSvarAlternativer();
-                allQuestions.removeObserver(this);
+                if(settOppSvarAlternativer()) {
+                    allQuestions.removeObserver(this);
+                }
             }
         };
         allQuestions.observeForever(observer);
@@ -79,11 +80,11 @@ public class QuizViewModel extends AndroidViewModel {
         return correctOption;
     }
 
-    public void settOppSvarAlternativer() {
+    public boolean settOppSvarAlternativer() {
         Log.d(TAG, "settOppSvarAlternativer: antall spørsmål: " + allQuestions.getValue().size());
         if (allQuestions.getValue().size() < 3) {
             Log.d(TAG, "settOppSvarAlternativer: Ikke nok spørsmål");
-            return;
+            return false;
         }
         Random random = new Random();
         QuestionItem correct = allQuestions.getValue().get(random.nextInt(allQuestions.getValue().size()));
@@ -112,5 +113,6 @@ public class QuizViewModel extends AndroidViewModel {
         });
 
         currentQuestionOptions.setValue(svar);
+        return true;
     }
 }

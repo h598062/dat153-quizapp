@@ -63,12 +63,12 @@ public class QuizActivity extends AppCompatActivity {
             }
         });
 
-        loadFragment();
+        //loadFragment();
 
 
-        getSupportFragmentManager().setFragmentResultListener(QuizFragment.RESULT, this, (requestKey, bundle) -> {
+        /*getSupportFragmentManager().setFragmentResultListener(QuizFragment.RESULT, this, (requestKey, bundle) -> {
             loadFragment();
-        });
+        });*/
 
     }
 

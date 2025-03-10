@@ -153,6 +153,9 @@ public class QuizFragment extends Fragment {
 
     private void finish() {
         Log.d(TAG, "finish: finished");
+        binding.btnAnswerA.setBackgroundColor(ContextCompat.getColor(requireContext(), MainActivity.getBgColor()));
+        binding.btnAnswerB.setBackgroundColor(ContextCompat.getColor(requireContext(), MainActivity.getBgColor()));
+        binding.btnAnswerC.setBackgroundColor(ContextCompat.getColor(requireContext(), MainActivity.getBgColor()));
         quizViewModel.settOppSvarAlternativer();
         getParentFragmentManager().setFragmentResult(RESULT, new Bundle());
     }

@@ -1,7 +1,10 @@
 package no.dat153.quizzler;
 
+import static org.junit.Assert.assertEquals;
+
 import android.util.Log;
 
+import androidx.lifecycle.MutableLiveData;
 import androidx.test.espresso.Espresso;
 import androidx.test.espresso.IdlingRegistry;
 import androidx.test.espresso.action.ViewActions;
@@ -57,18 +60,28 @@ public class QuizLiveDataTest {
         activityScenarioRule.getScenario().onActivity(activity -> {
             Log.d(TAG, "testButtonClickWaitsForCorrectAnswerLiveData: getting the livedata");
             viewModel = activity.getViewModel();
+            /*try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }*/
             expectedCorrectAnswer = viewModel.getCorrectOption().getValue(); // Get and store it
         });
 
         // **IMPORTANT: UI Interaction (Espresso.onView().perform()) is now OUTSIDE onActivity()**
         // **On the test thread, where Espresso UI actions should be.**
         // Act: Click the button with the expected correct answer text
+
+
+        Integer correctGuesses = viewModel.getCorrectGuesses().getValue();
+        Integer totalGuesses = viewModel.getTotalGuesses().getValue();
         Espresso.onView(ViewMatchers.withText(expectedCorrectAnswer.getImageText()))
                 .perform(ViewActions.click());
 
         // Assert: (Optional) Add assertions to verify UI changes after the click
         // You can add assertions here if needed, also outside onActivity()
-
+        assertEquals(correctGuesses.intValue() + 1, viewModel.getCorrectGuesses().getValue().intValue());
+        assertEquals(totalGuesses.intValue() +1, viewModel.getTotalGuesses().getValue().intValue());
     }
 
     @After
